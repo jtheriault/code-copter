@@ -1,0 +1,22 @@
+{
+  "name": "boilerplate-javascript",
+  "version": "0.0.1",
+  "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jtheriault/boilerplate-javascript.git"
+  },
+  "keywords": [
+    "javascript",
+    "boilerplate"
+  ],
+  "author": "Joe Theriault <joseph@yankoismedia.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtheriault/boilerplate-javascript/issues"
+  },
+  "devDependencies": {
+  }
+}

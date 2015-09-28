@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-javascript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
   "scripts": {
     "test": "JASMINE_CONFIG_PATH=jasmine.json ./node_modules/.bin/jasmine"
@@ -20,5 +20,7 @@
   },
   "devDependencies": {
     "jasmine": "~2.3.2",
+    "jshint": "~2.8.0",
+    "walk": "~2.3.9"
   }
 }

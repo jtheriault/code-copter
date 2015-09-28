@@ -1,0 +1,5 @@
+{
+    "esnext": true,
+    "jasmine": true,
+    "node": true
+}

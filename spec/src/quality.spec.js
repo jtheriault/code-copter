@@ -1,34 +1,40 @@
 'use strict';
-describe('Code quality', function describeCodeQuality () {
-    var walk = require('walk'),
-        path = require('path'),
-        fs = require('fs'),
-        fileMatchers = require('./file-matchers');
+var walk = require('walk'),
+    omittedPaths = ['node_modules'],
+    path = require('path'),
+    fs = require('fs'),
+    fileMatchers = require('./file-matchers');
 
-    beforeEach(function addFileMatchers () {
-        jasmine.addMatchers(fileMatchers);
-    });
+function assureFileQuality (root, stats, next) {
+    var filePath;
+    
+    if(path.extname(stats.name) !== '.js') {
+        next();
+    }
+    else {
+        filePath = path.join(root, stats.name);
 
-    it('should meet configured JSHint standards', function shouldPassJsHint (done) {
-        var self = this,
-            omittedPaths = ['node_modules'],
-            walker = walk.walk('.', { filters: omittedPaths });
+        describe(filePath, function describeFileQuality () {
+            beforeEach(function addFileMatchers () {
+                jasmine.addMatchers(fileMatchers);
+            });
 
-        walker.on('end', done);
-        walker.on('file', function validateFile (root, stats, next) {
-            var filePath;
-            
-            if(path.extname(stats.name) !== '.js') {
+            it('should meet source quality standards', function () {
+                var source = fs.readFileSync(filePath, 'utf8');
+
+                for (let toPassFileMatcher in fileMatchers) {
+                    expect(source)[toPassFileMatcher]();
+                }
+
                 next();
-            }
-            else {
-                filePath = path.join(root, stats.name);
-
-                fs.readFile(filePath, 'utf8', function validateFileSource (error, source) {
-                    expect(source).toPassJSHint();
-                    next();
-                });
-            }
+            });
         });
-    });
+    }
+}
+
+walk.walkSync('.', { 
+    filters: omittedPaths,
+    listeners: {
+        file: assureFileQuality
+    }
 });

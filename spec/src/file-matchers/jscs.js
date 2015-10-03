@@ -6,15 +6,24 @@ var fs = require('fs'),
 
 module.exports = toPassJSCS;
 
+/**
+ * Get the object representation of the configuration in .jscsrc in the project
+ * root.
+ */
 function getJscsrc () {
     if (!jscsrc) {
+        // TODO: Provide error when parsing fails
         jscsrc = JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
     }
 
     return jscsrc;
 }
 
-function toPassJSCS (util, customEqualityTesters) {
+/**
+ * Jasmine matcher function to perform the comparison of actual source code to
+ * the expected JSCS configuration.
+ */
+function toPassJSCS () {
     return {
         compare: function compare (actual, expected) {
             // TOOD: Don't instantiate and configure default every time
@@ -32,7 +41,7 @@ function toPassJSCS (util, customEqualityTesters) {
             if (result.pass) {
                 result.message = 'Expected source not to pass JSCS';
             }
-            else{
+            else {
                 result.message = errors.map(error => `line ${error.line}:\t${error.message}`)
                     .join('\n');
             }

@@ -4,6 +4,9 @@ var fileMatchers = [
     require('./jscs')
 ];
 
+/**
+ * Gets file matchers as an object map of the names to their functions.
+ */
 function getFileMatcherObjectMap () {
     return fileMatchers.reduce(
         (prev, current) => { 

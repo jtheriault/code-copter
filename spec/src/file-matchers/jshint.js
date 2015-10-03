@@ -6,6 +6,10 @@ var fs = require('fs'),
 
 module.exports = toPassJSHint;
 
+/**
+ * Gets the object representation of the configuration in .jshintrc in the 
+ * project root.
+ */
 function getJshintrc () {
     if (!jshintrc) {
         jshintrc = JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
@@ -14,7 +18,11 @@ function getJshintrc () {
     return jshintrc;
 }
 
-function toPassJSHint (util, customEqualityTesters) {
+/**
+ * Jasmine matcher function to perform the comparison of actual source code to
+ * the expected JSHint configuration.
+ */
+function toPassJSHint () {
     return {
         compare: function compare (actual, expected) {
             var config = expected || getJshintrc(),

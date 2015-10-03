@@ -1,6 +1,7 @@
 'use strict';
 var fileMatchers = [
-    require('./jshint')
+    require('./jshint'),
+    require('./jscs')
 ];
 
 function getFileMatcherObjectMap () {

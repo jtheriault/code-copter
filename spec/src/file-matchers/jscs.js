@@ -12,8 +12,12 @@ module.exports = toPassJSCS;
  */
 function getJscsrc () {
     if (!jscsrc) {
-        // TODO: Provide error when parsing fails
-        jscsrc = JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
+        try {
+            jscsrc = JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
+        }
+        catch (error) {
+            throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error ${error.message}`, error);
+        }
     }
 
     return jscsrc;

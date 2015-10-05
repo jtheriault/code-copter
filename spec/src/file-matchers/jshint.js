@@ -12,7 +12,12 @@ module.exports = toPassJSHint;
  */
 function getJshintrc () {
     if (!jshintrc) {
-        jshintrc = JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
+        try {
+            jshintrc = JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
+        }
+        catch (error) {
+            throw new Error(`Expected to find JSHint configuration ${jshintrcPath}; saw error ${error.message}`, error);
+        }
     }
 
     return jshintrc;

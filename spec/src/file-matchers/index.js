@@ -1,7 +1,8 @@
 'use strict';
 var fileMatchers = [
     require('./jshint'),
-    require('./jscs')
+    require('./jscs'),
+    require('./require-peers')
 ];
 
 /**

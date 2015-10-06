@@ -1,6 +1,26 @@
 'use strict';
 module.exports = toOnlyRequirePeers;
 
+// TODO: Clean and optimize this clumsy thing
+function checkLine (line, lineIndex) {
+    var status = {
+            hasError: false,
+            line: lineIndex + 1
+        },
+        requireStatement;
+
+    requireStatement = line.match(/require\((['"])\..*?\1\)/);
+
+    if (requireStatement !== null) {
+        if (requireStatement[0].match('\\W\\.\\./') || requireStatement[0].match(/\//g).length > 1) {
+            status.hasError = true;
+            status.message = `${requireStatement[0]} references another directory`;
+        }
+    }
+
+    return status;
+}
+
 /**
  * 
  */
@@ -11,9 +31,10 @@ function toOnlyRequirePeers () {
                 errors;
 
             // TODO: Capture line number
-            errors = (actual.match(/require\((['"])\..*?\1\)/g) || [])
-                .filter(fileRequire => fileRequire.match(/\./g).length > 1 || fileRequire.match(/\//g).length > 1)
-                .map(statement => `Requiring non-peer, non-package module: ${statement}`);
+            errors = actual.split('\n')
+                .map(checkLine)
+                .filter(status => status.hasError)
+                .map(error => `line ${error.line}:\t${error.message}`);
                 
             result.pass = errors.length === 0;
 

@@ -1,9 +1,10 @@
 {
   "name": "boilerplate-javascript",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
   "scripts": {
-    "test": "JASMINE_CONFIG_PATH=jasmine.json ./node_modules/.bin/jasmine"
+    "test": "JASMINE_CONFIG_PATH=jasmine.json ./node_modules/.bin/jasmine",
+    "watch:test": "./node_modules/.bin/nodemon -x npm test"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "jasmine": "~2.3.2",
     "jshint": "~2.8.0",
     "walk": "~2.3.9",
-    "jscs": "~2.2.1"
+    "jscs": "~2.2.1",
+    "nodemon": "~1.7.1"
   }
 }

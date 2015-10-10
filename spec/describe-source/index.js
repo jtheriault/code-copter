@@ -5,6 +5,8 @@ var walk = require('walk'),
     fs = require('fs'),
     fileMatchers = require('./file-matchers');
 
+module.exports = describeSource;
+
 /**
  * Assures the quality of the specified file using available file matchers with
  * the Jasmine testing framework.
@@ -40,9 +42,15 @@ function assureFileQuality (root, stats, next) {
     }
 }
 
-walk.walkSync('.', { 
-    filters: omittedPaths,
-    listeners: {
-        file: assureFileQuality
-    }
-});
+/**
+ * Walk all included paths and assure the quality of the source based on the
+ * configured matchers.
+ */
+function describeSource () {
+    walk.walkSync('.', { 
+        filters: omittedPaths,
+        listeners: {
+            file: assureFileQuality
+        }
+    });
+}

@@ -3,7 +3,8 @@
   "version": "0.0.8",
   "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
   "scripts": {
-    "test": "JASMINE_CONFIG_PATH=jasmine.json jasmine",
+    "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",
+    "posttest": "istanbul check-coverage",
     "watch:test": "nodemon -x npm test"
   },
   "repository": {
@@ -20,10 +21,11 @@
     "url": "https://github.com/jtheriault/boilerplate-javascript/issues"
   },
   "devDependencies": {
+    "istanbul": "^0.3.22",
     "jasmine": "~2.3.2",
-    "jshint": "~2.8.0",
-    "walk": "~2.3.9",
     "jscs": "~2.2.1",
-    "nodemon": "~1.7.1"
+    "jshint": "~2.8.0",
+    "nodemon": "~1.7.1",
+    "walk": "~2.3.9"
   }
 }

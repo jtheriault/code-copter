@@ -3,8 +3,8 @@
   "version": "0.0.8",
   "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
   "scripts": {
-    "test": "JASMINE_CONFIG_PATH=jasmine.json ./node_modules/.bin/jasmine",
-    "watch:test": "./node_modules/.bin/nodemon -x npm test"
+    "test": "JASMINE_CONFIG_PATH=jasmine.json jasmine",
+    "watch:test": "nodemon -x npm test"
   },
   "repository": {
     "type": "git",

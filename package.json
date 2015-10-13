@@ -16,7 +16,7 @@
     "boilerplate"
   ],
   "author": "Joe Theriault <joseph@yankoismedia.com>",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/jtheriault/boilerplate-javascript/issues"
   },

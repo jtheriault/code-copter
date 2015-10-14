@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate-javascript",
-  "version": "0.0.8",
-  "description": "Project boilerplate including basic docs, style guide, build, testing, and CI configuration.",
+  "name": "code-copter",
+  "version": "0.0.1",
+  "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
     "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",
     "posttest": "istanbul check-coverage",
@@ -9,16 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jtheriault/boilerplate-javascript.git"
+    "url": "git@github.com:jtheriault/code-copter.git"
   },
   "keywords": [
-    "javascript",
-    "boilerplate"
+    "test",
+    "jasmine",
+    "jshint",
+    "style guide"
   ],
   "author": "Joe Theriault <joseph@yankoismedia.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jtheriault/boilerplate-javascript/issues"
+    "url": "https://github.com/jtheriault/code-copter/issues"
   },
   "devDependencies": {
     "istanbul": "^0.3.22",

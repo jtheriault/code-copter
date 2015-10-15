@@ -22,12 +22,14 @@
   "bugs": {
     "url": "https://github.com/jtheriault/code-copter/issues"
   },
-  "devDependencies": {
-    "istanbul": "^0.3.22",
+  "dependencies": {
     "jasmine": "~2.3.2",
     "jscs": "~2.2.1",
     "jshint": "~2.8.0",
-    "nodemon": "~1.7.1",
     "walk": "~2.3.9"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.22",
+    "nodemon": "~1.7.1"
   }
 }

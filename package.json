@@ -1,6 +1,6 @@
 {
   "name": "code-copter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
     "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",

@@ -3,7 +3,7 @@ var walk = require('walk'),
     omittedPaths = ['node_modules'],
     path = require('path'),
     fs = require('fs'),
-    fileMatchers = require('./file-matchers');
+    analyzers = require('./analyzers');
 
 module.exports = describeSource;
 
@@ -26,13 +26,13 @@ function assureFileQuality (root, stats, next) {
 
         describe(filePath, function describeFileQuality () {
             beforeEach(function addFileMatchers () {
-                jasmine.addMatchers(fileMatchers);
+                jasmine.addMatchers(analyzers);
             });
 
             it('should meet source quality standards', function shouldPassSourceMatchers () {
                 var source = fs.readFileSync(filePath, 'utf8');
 
-                for (let toPassFileMatcher in fileMatchers) {
+                for (let toPassFileMatcher in analyzers) {
                     expect(source)[toPassFileMatcher]();
                 }
 

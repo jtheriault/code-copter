@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ ! -f $JASMINE_CONFIG_PATH ]; then
+    echo "Script is meant to be run from project root"
+    exit 1
+fi
+
+for spec in $(ls examples/*.spec.js)
+do 
+    JASMINE_CONFIG_PATH=jasmine.json jasmine $spec
+done
+
+exit 0

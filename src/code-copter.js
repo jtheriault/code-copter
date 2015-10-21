@@ -3,7 +3,7 @@ var walk = require('walk'),
     omittedPaths = ['node_modules'],
     path = require('path'),
     fs = require('fs'),
-    analyzers = require('./analyzers'),
+    analyzerFactory = require('./analyzer_factory'),
     configuration,
     matchers;
 
@@ -48,8 +48,12 @@ function assureFileQuality (root, stats, next) {
 function configure (config) {
     matchers = [];
 
-    for (let analyzer in config) {
-        matchers[analyzer] = config[analyzer];
+    for (let analyzerName in config) {
+        let analyzer = analyzerFactory.create(analyzerName, config[analyzerName]);
+        
+        if (analyzer) {
+            matchers.push(analyzer);
+        }
     }
 }
 

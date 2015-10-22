@@ -16,4 +16,4 @@ codeCopter.configure({
     itSucks: itSucks
 });
 
-describe('My code', codeCopter);
+describe('Custom Analayzer Example', codeCopter);

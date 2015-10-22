@@ -6,4 +6,4 @@ codeCopter.configure({
     jscs: false
 });
 
-describe('enable-disable example', codeCopter);
+describe('Enable-Disable Example', codeCopter);

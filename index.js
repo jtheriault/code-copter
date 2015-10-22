@@ -3,8 +3,8 @@ var analyzers = require('./src')['analyzers'],
     codeCopter = require('./src')['code-copter'];
 
 codeCopter.configure({
-    jshint: analyzers.jshint,
-    jscs: analyzers.jscs
+    jshint: true,
+    jscs: true
 });
 
 module.exports = codeCopter;

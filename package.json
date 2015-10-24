@@ -1,6 +1,6 @@
 {
   "name": "code-copter",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
     "examples": "scripts/run-examples",

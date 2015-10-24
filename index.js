@@ -1,10 +1,10 @@
 'use strict';
-var analyzers = require('./src')['analyzers'],
-    codeCopter = require('./src')['code-copter'];
+var analyzers = require('./src').analyzers,
+    codeCopter = require('./src').codeCopter;
 
 codeCopter.configure({
-    jshint: true,
-    jscs: true
+    jscs: true,
+    jshint: true
 });
 
 module.exports = codeCopter;

@@ -1,7 +1,7 @@
 'use strict';
 var analyzers = {
-    jshint: require('./jshint'),
     jscs: require('./jscs'),
+    jshint: require('./jshint'),
     requirePeers: require('./require-peers')
 };
 

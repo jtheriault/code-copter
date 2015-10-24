@@ -3,10 +3,10 @@ var codeCopter = require('../');
 
 function itSucks () {
     return {
-        compare: function compare (actual) {
+        compare: function compare () {
             return {
-                pass: false,
-                message: 'Expected actual code not to suck'
+                message: 'Expected actual code not to suck',
+                pass: false
             };
         }
     };

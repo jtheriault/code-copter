@@ -2,8 +2,8 @@
 var codeCopter = require('../');
 
 codeCopter.configure({
-    jscs: false,
+    jscs: true,
     jshint: true
 });
 
-describe('Enable-Disable Example', codeCopter);
+describe('Code quality', codeCopter);

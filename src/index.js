@@ -1,5 +1,5 @@
 'use strict';
 module.exports = {
-    'analyzers': require('./analyzers'),
-    'code-copter': require('./code-copter')
+    analyzers: require('./analyzers'),
+    codeCopter: require('./code-copter')
 };

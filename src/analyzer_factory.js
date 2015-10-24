@@ -3,7 +3,7 @@ var analyzers = require('./analyzers');
 
 exports.create = create;
 
-function create (name, config) {
+function create () {
     return createPackaged.apply(null, arguments) || createPassThrough.apply(null, arguments);
 }
 

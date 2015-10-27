@@ -3,7 +3,7 @@ var walk = require('walk'),
     omittedPaths = ['node_modules'],
     path = require('path'),
     fs = require('fs'),
-    analyzerFactory = require('./analyzer_factory'),
+    analyzerFactory = require('./analyzer-factory'),
     configuration,
     matchers;
 

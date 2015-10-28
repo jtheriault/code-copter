@@ -46,10 +46,15 @@ function assureFileQuality (root, stats, next) {
 }
 
 function configure (config) {
+    var analyzers;
+
+    omittedPaths = config.exclude ? config.exclude : omittedPaths;
+    analyzers = config.analyzers ? config.analyzers : config;
+
     matchers = [];
 
-    for (let analyzerName in config) {
-        let analyzer = analyzerFactory.create(analyzerName, config[analyzerName]);
+    for (let analyzerName in analyzers) {
+        let analyzer = analyzerFactory.create(analyzerName, analyzers[analyzerName]);
         
         if (analyzer) {
             matchers.push(analyzer);

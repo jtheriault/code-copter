@@ -1,16 +1,22 @@
 'use strict';
-var prequire = require('parent-require');
+var prequire = require('parent-require'),
+    prefix = 'code-copter-analyzer-';
 
 exports.create = create;
 
 function create (name) {
-    // TODO: log inability to load named module
-    return createPrefixed(name) || createLiteral(name);
+    var plugin = createPrefixed(name) || createLiteral(name);
+
+    if (plugin === null) {
+        console.warn(`No plugin found for "${name}" or "${prefix}${name}"`);
+    }
+
+    return plugin;
 }
 
 function createPrefixed (name) {
     try {
-        return prequire('code-copter-analyzer-' + name);
+        return prequire(prefix + name);
     }
     catch (ignore) {
         return null;

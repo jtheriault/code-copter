@@ -1,6 +1,5 @@
 'use strict';
 var walk = require('walk'),
-    omittedPaths = ['node_modules'],
     path = require('path'),
     fs = require('fs'),
     analyzerFactory = require('./analyzer-factory'),
@@ -16,7 +15,7 @@ configuration = {
         jscs: true,
         jshint: true
     },
-    exclude: omittedPaths
+    exclude: ['node_modules']
 };
 
 /**
@@ -54,22 +53,33 @@ function assureFileQuality (root, stats, next) {
     }
 }
 
+/**
+ * @deprecated - Support for legacy analyzers-only config param format will be removed in next major version
+ *
+ * Sets the configuration of how code-copter operates.
+ *
+ * @param {Object} config - Configuration container. 
+ * @param {String[]} config.exclude - Array of file/folder names to exclude from analysis.
+ * @param {Object} config.analyzers - Keys of analyzer names; values of enabled boolean or custom implementation.
+ */
 function configure (config) {
     var analyzers,
         configObj = {};
 
-    configObj.exclude = config.exclude ? config.exclude : omittedPaths;
-    configObj.analyzers = config.analyzers ? config.analyzers : config;
+    if (config.exclude) {
+        configObj.exclude = config.exclude;
+    }
+
+    if (config.analyzers) {
+        configObj.analyzers =  config.analyzers;
+    }
 
     configuration = extend.deeply(configuration, configObj);
 
-    omittedPaths = configuration.exclude;
-    analyzers = configuration.analyzers;
-
     matchers = [];
 
-    for (let analyzerName in analyzers) {
-        let analyzer = analyzerFactory.create(analyzerName, analyzers[analyzerName]);
+    for (let analyzerName in configuration.analyzers) {
+        let analyzer = analyzerFactory.create(analyzerName, configuration.analyzers[analyzerName]);
         
         if (analyzer) {
             matchers.push(analyzer);
@@ -83,7 +93,7 @@ function configure (config) {
  */
 function describeSource () {
     walk.walkSync('.', { 
-        filters: omittedPaths,
+        filters: configuration.exclude,
         listeners: {
             file: assureFileQuality
         }

@@ -4,11 +4,20 @@ var walk = require('walk'),
     path = require('path'),
     fs = require('fs'),
     analyzerFactory = require('./analyzer-factory'),
+    extend = require('./extend'),
     configuration,
     matchers;
 
 module.exports = describeSource;
 module.exports.configure = configure;
+
+configuration = {
+    analyzers: {
+        jscs: true,
+        jshint: true
+    },
+    exclude: omittedPaths
+};
 
 /**
  * Assures the quality of the specified file using available file matchers with
@@ -46,10 +55,16 @@ function assureFileQuality (root, stats, next) {
 }
 
 function configure (config) {
-    var analyzers;
+    var analyzers,
+        configObj = {};
 
-    omittedPaths = config.exclude ? config.exclude : omittedPaths;
-    analyzers = config.analyzers ? config.analyzers : config;
+    configObj.exclude = config.exclude ? config.exclude : omittedPaths;
+    configObj.analyzers = config.analyzers ? config.analyzers : config;
+
+    configuration = extend.deeply(configuration, configObj);
+
+    omittedPaths = configuration.exclude;
+    analyzers = configuration.analyzers;
 
     matchers = [];
 

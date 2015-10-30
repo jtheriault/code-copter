@@ -1,4 +1,7 @@
 'use strict';
+/**
+ * @deprecated - require-peers will not be a packaged analyzer after the next major release. Please use the code-copter-analyzer-shortrequire module (https://www.npmjs.com/package/code-copter-analyzer-shortrequire)
+ */
 module.exports = toOnlyRequirePeers;
 
 // TODO: Clean and optimize this clumsy thing

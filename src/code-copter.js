@@ -3,99 +3,77 @@ var walk = require('walk'),
     path = require('path'),
     fs = require('fs'),
     analyzerFactory = require('./analyzer-factory'),
-    extend = require('./extend'),
-    configuration,
-    matchers;
+    configuration = require('./configuration');
 
-module.exports = describeSource;
-module.exports.configure = configure;
+module.exports = main;
 
-configuration = {
-    analyzers: {
-        jscs: true,
-        jshint: true
-    },
-    exclude: ['node_modules']
-};
+function analyzeFiles (context) {
+    function analyzeFile (root, stats, next) {
+        var filePath;
 
-/**
- * Assures the quality of the specified file using available file matchers with
- * the Jasmine testing framework.
- *
- * @param {String} root - The folder path of the file.
- * @param {Object } stats - The "fs" stats of the file to quality check.
- * @param {Function} next - The callback to continue to exit and proceed.
- */
-function assureFileQuality (root, stats, next) {
-    var filePath;
+        if (path.extname(stats.name) !== '.js') {
+            next();
+        }
+        else {
+            filePath = path.join(root, stats.name);
 
-    if (path.extname(stats.name) !== '.js') {
-        next();
-    }
-    else {
-        filePath = path.join(root, stats.name);
+            describe(filePath, function describeFileQuality () {
+                beforeEach(function addMatchers () {
+                    jasmine.addMatchers(context.analyzers);
+                });
 
-        describe(filePath, function describeFileQuality () {
-            beforeEach(function addFileMatchers () {
-                jasmine.addMatchers(matchers);
+                it('should meet source quality standards', function shouldPassMatchers () {
+                    var source = fs.readFileSync(filePath, 'utf8');
+
+                    for (let toPassMatcher in context.analyzers) {
+                        expect(source)[toPassMatcher]();
+                    }
+
+                    next();
+                });
             });
-
-            it('should meet source quality standards', function shouldPassSourceMatchers () {
-                var source = fs.readFileSync(filePath, 'utf8');
-
-                for (let toPassFileMatcher in matchers) {
-                    expect(source)[toPassFileMatcher]();
-                }
-
-                next();
-            });
-        });
-    }
-}
-
-/**
- * @deprecated - Support for legacy analyzers-only config param format will be removed in next major version
- *
- * Sets the configuration of how code-copter operates.
- *
- * @param {Object} config - Configuration container. 
- * @param {String[]} config.exclude - Array of file/folder names to exclude from analysis.
- * @param {Object} config.analyzers - Keys of analyzer names; values of enabled boolean or custom implementation.
- */
-function configure (config) {
-    var analyzers,
-        configObj = {};
-
-    if (config.exclude) {
-        configObj.exclude = config.exclude;
-    }
-
-    if (config.analyzers) {
-        configObj.analyzers =  config.analyzers;
-    }
-
-    configuration = extend.deeply(configuration, configObj);
-
-    matchers = [];
-
-    for (let analyzerName in configuration.analyzers) {
-        let analyzer = analyzerFactory.create(analyzerName, configuration.analyzers[analyzerName]);
-        
-        if (analyzer) {
-            matchers.push(analyzer);
         }
     }
-}
 
-/**
- * Walk all included paths and assure the quality of the source based on the
- * configured matchers.
- */
-function describeSource () {
     walk.walkSync('.', { 
-        filters: configuration.exclude,
+        filters: context.configuration.exclude,
         listeners: {
-            file: assureFileQuality
+            file: analyzeFile
         }
     });
+}
+
+function loadAnalyzers (context) {
+    var analyzers = [];
+
+    for (let analyzerName in context.configuration.analyzers) {
+        let analyzer = analyzerFactory.create(analyzerName, context.configuration.analyzers[analyzerName]);
+        
+        if (analyzer) {
+            analyzers.push(analyzer);
+        }
+    }
+
+    context.analyzers = analyzers;
+
+    return context;
+}
+
+function loadConfiguration (context) {
+    context.configuration = configuration.get();
+
+    return context;
+}
+
+function main () {
+    var context,
+        tasks;
+
+    context = {};
+
+    tasks = [
+        loadConfiguration,
+        loadAnalyzers,
+        analyzeFiles
+    ].reduce((val, task) => task(val), context);
 }

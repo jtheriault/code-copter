@@ -2,45 +2,60 @@
 var walk = require('walk'),
     path = require('path'),
     fs = require('fs'),
+    report = require('./jasmine'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration');
 
 module.exports = main;
 
 function analyzeFiles (context) {
+    // TODO: Un-nest this function
     function analyzeFile (root, stats, next) {
-        var filePath;
-
+        var filePath = path.join(root, stats.name),
+            analysis;
+        
         if (path.extname(stats.name) !== '.js') {
             next();
         }
         else {
-            filePath = path.join(root, stats.name);
+            analysis = analyzeSource(filePath, context.analyzers);
 
-            describe(filePath, function describeFileQuality () {
-                beforeEach(function addMatchers () {
-                    jasmine.addMatchers(context.analyzers);
-                });
-
-                it('should meet source quality standards', function shouldPassMatchers () {
-                    var source = fs.readFileSync(filePath, 'utf8');
-
-                    for (let toPassMatcher in context.analyzers) {
-                        expect(source)[toPassMatcher]();
-                    }
-
-                    next();
-                });
-            });
+            report(analysis, next);
         }
     }
 
+    // TODO: Handle errors
     walk.walkSync('.', { 
         filters: context.configuration.exclude,
         listeners: {
             file: analyzeFile
         }
     });
+}
+
+function analyzeSource (filePath, analyzers) {
+    var source = fs.readFileSync(filePath, 'utf8'),
+        analysis = {
+            errors: [],
+            filePath: filePath,
+            pass: true
+        };
+
+    for (let analyzer in analyzers) {
+        // TODO: Break out of Jasmine idioms
+        let result = analyzers[analyzer]().compare(source);
+
+        if (!result.pass) {
+            analysis.errors.push({
+                line: 1,
+                message: result.message
+            });
+        }
+    }
+
+    analysis.pass = analysis.errors.length === 0;
+
+    return analysis;
 }
 
 function loadAnalyzers (context) {
@@ -71,9 +86,14 @@ function main () {
 
     context = {};
 
-    tasks = [
-        loadConfiguration,
-        loadAnalyzers,
-        analyzeFiles
-    ].reduce((val, task) => task(val), context);
+    try {
+        tasks = [
+            loadConfiguration,
+            loadAnalyzers,
+            analyzeFiles
+        ].reduce((val, task) => task(val), context);
+    }
+    catch (error) {
+        console.error('Could not run code copter analysis due to error', error);
+    }
 }

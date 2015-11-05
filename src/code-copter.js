@@ -41,20 +41,17 @@ function analyzeSource (filePath, analyzers) {
             pass: true
         };
 
-    for (let analyzer in analyzers) {
-        // TODO: Break out of Jasmine idioms
-        let result = analyzers[analyzer]().compare(source);
+    for (let i in analyzers) {
+        let result = analyzers[i](source);
 
         if (!result.pass) {
-            analysis.errors.push({
-                line: 1,
-                message: result.message
-            });
+            analysis.errors.push.apply(analysis.errors, result.errors);
         }
     }
 
     analysis.pass = analysis.errors.length === 0;
 
+    // TODO: Sort errors
     return analysis;
 }
 

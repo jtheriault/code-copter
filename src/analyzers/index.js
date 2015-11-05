@@ -1,8 +1,7 @@
 'use strict';
 var analyzers = {
     jscs: require('./jscs'),
-    jshint: require('./jshint'),
-    requirePeers: require('./require-peers')
+    jshint: require('./jshint')
 };
 
 module.exports = analyzers; 

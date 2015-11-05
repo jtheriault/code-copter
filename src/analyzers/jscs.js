@@ -4,7 +4,7 @@ var fs = require('fs'),
     jscsrc,
     Jscs = require('jscs');
 
-module.exports = toPassJSCS;
+module.exports = analyze;
 
 /**
  * Get the object representation of the configuration in .jscsrc in the project
@@ -23,34 +23,20 @@ function getJscsrc () {
     return jscsrc;
 }
 
-/**
- * Jasmine matcher function to perform the comparison of actual source code to
- * the expected JSCS configuration.
- */
-function toPassJSCS () {
-    return {
-        compare: function compare (actual, expected) {
-            // TOOD: Don't instantiate and configure default every time
-            var jscs = new Jscs(),
-                config = expected || getJscsrc(),
-                errors,
-                result = { pass: true };
+function analyze (actual, expected) {
+    // TOOD: Don't instantiate and configure default every time
+    var jscs = new Jscs(),
+        config = expected || getJscsrc(),
+        errors,
+        result = { pass: true };
 
-            jscs.registerDefaultRules();
-            jscs.configure(config);
+    jscs.registerDefaultRules();
+    jscs.configure(config);
 
-            errors = jscs.checkString(actual).getErrorList();
-            result.pass = errors.length === 0;
+    errors = jscs.checkString(actual).getErrorList();
+    result.pass = errors.length === 0;
 
-            if (result.pass) {
-                result.message = 'Expected source not to pass JSCS';
-            }
-            else {
-                result.message = errors.map(error => `line ${error.line}:\t${error.message}`)
-                    .join('\n');
-            }
+    result.errors = errors.map(error => ({ line: error.line, message: error.message }));
 
-            return result;
-        }
-    };
+    return result;
 }

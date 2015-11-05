@@ -4,7 +4,7 @@ var fs = require('fs'),
     jshintrc,
     jshint = require('jshint').JSHINT;
 
-module.exports = toPassJSHint;
+module.exports = analyze;
 
 /**
  * Gets the object representation of the configuration in .jshintrc in the 
@@ -23,29 +23,15 @@ function getJshintrc () {
     return jshintrc;
 }
 
-/**
- * Jasmine matcher function to perform the comparison of actual source code to
- * the expected JSHint configuration.
- */
-function toPassJSHint () {
-    return {
-        compare: function compare (actual, expected) {
-            var config = expected || getJshintrc(),
-                result = { pass: true };
+function analyze (actual) {
+    var config = getJshintrc(),
+        result = { pass: true };
 
-            jshint(actual, jshintrc);
-            result.pass = jshint.errors.length === 0;
+    jshint(actual, jshintrc);
+    result.pass = jshint.errors.length === 0;
 
-            if (result.pass) {
-                result.message = 'Expected source not to pass JSHint';
-            }
-            else {
-                result.message = jshint.errors
-                    .map(error => `line ${error.line}:\t${error.raw}`)
-                    .join('\n');
-            }
+    result.errors = jshint.errors
+        .map(error => ({ line: error.line, message: error.raw }));
 
-            return result;
-        }
-    };
+    return result;
 }

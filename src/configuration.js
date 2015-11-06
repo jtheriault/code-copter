@@ -10,7 +10,8 @@ configuration = {
         jscs: true,
         jshint: true
     },
-    exclude: ['node_modules']
+    exclude: ['node_modules'],
+    reporter: 'jasmine'
 };
 
 function get () {

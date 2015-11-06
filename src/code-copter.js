@@ -2,7 +2,7 @@
 var walk = require('walk'),
     path = require('path'),
     fs = require('fs'),
-    report = require('./jasmine'),
+    reporterFactory = require('./reporter-factory'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration');
 
@@ -20,7 +20,7 @@ function analyzeFiles (context) {
         else {
             analysis = analyzeSource(filePath, context.analyzers);
 
-            report(analysis, next);
+            context.reporter(analysis, next);
         }
     }
 
@@ -77,6 +77,12 @@ function loadConfiguration (context) {
     return context;
 }
 
+function loadReporter (context) {
+    context.reporter = reporterFactory.create(context.configuration.reporter);
+
+    return context;
+}
+
 function main () {
     var context,
         tasks;
@@ -86,6 +92,7 @@ function main () {
     try {
         tasks = [
             loadConfiguration,
+            loadReporter,
             loadAnalyzers,
             analyzeFiles
         ].reduce((val, task) => task(val), context);

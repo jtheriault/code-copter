@@ -1,5 +1,5 @@
 'use strict';
-describe('Analyzer plugin factory', function describeAnalyzerPluginFactory () {
+describe('Plugin factory', function describePluginFactory () {
     var proxyquire = require('proxyquire'),
         factory,
         parentRequireSpy,
@@ -14,7 +14,7 @@ describe('Analyzer plugin factory', function describeAnalyzerPluginFactory () {
 
         parentRequireSpy = jasmine.createSpy('parent-require').and.callFake(name => name === expectedPluginName ? fakeModule : null);
 
-        factory = proxyquire('./analyzer-plugin-factory', {
+        factory = proxyquire('./plugin-factory', {
             'parent-require': parentRequireSpy
         });
     });
@@ -24,7 +24,7 @@ describe('Analyzer plugin factory', function describeAnalyzerPluginFactory () {
 
         parentRequireSpy.and.throwError('what you talkin bout?');
 
-        plugin = factory.create('an unknown plugin');
+        plugin = factory.create('possibly unknown type', 'unknown plugin');
 
         expect(plugin).toBe(null);
     });
@@ -32,16 +32,18 @@ describe('Analyzer plugin factory', function describeAnalyzerPluginFactory () {
     it('should return an exact match name module from the parent', function create () {
         expectedPluginName = testPluginName;
         
-        plugin = factory.create(testPluginName);
+        plugin = factory.create('ignore me', testPluginName);
 
         expect(parentRequireSpy).toHaveBeenCalledWith(expectedPluginName);
         expect(plugin).toBe(fakeModule);
     });
 
     it('should prefer a prefixed name match from the parent', function create () {
-        expectedPluginName = 'code-copter-analyzer-' + testPluginName;
+        var testPluginType = 'test';
 
-        plugin = factory.create(testPluginName);
+        expectedPluginName = `code-copter-${testPluginType}-${testPluginName}`;
+
+        plugin = factory.create(testPluginType, testPluginName);
 
         expect(parentRequireSpy).toHaveBeenCalledWith(expectedPluginName);
         expect(parentRequireSpy.calls.count()).toEqual(1);

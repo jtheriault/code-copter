@@ -18,5 +18,5 @@ function createPassThrough (name, config) {
 }
 
 function createPlugin (name) {
-    return require('./analyzer-plugin-factory').create(name);
+    return require('./plugin-factory').create('analyzer', name);
 }

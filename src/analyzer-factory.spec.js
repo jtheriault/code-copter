@@ -54,12 +54,12 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
 
     it('should return a plugin', function create () {
         var testAnalyzerName = 'Sigmund',
-            pluginFactory = require('./analyzer-plugin-factory');
+            pluginFactory = require('./plugin-factory');
 
         spyOn(pluginFactory, 'create');
 
         factory.create(testAnalyzerName, true);
 
-        expect(pluginFactory.create).toHaveBeenCalledWith(testAnalyzerName);
+        expect(pluginFactory.create).toHaveBeenCalledWith('analyzer', testAnalyzerName);
     });
 });

@@ -10,7 +10,7 @@ configuration = {
         jscs: true,
         jshint: true
     },
-    exclude: ['node_modules'],
+    exclude: ['coverage', 'node_modules'],
     reporter: 'jasmine'
 };
 
@@ -19,25 +19,15 @@ function get () {
 }
 
 /**
- * @deprecated - Support for legacy analyzers-only config param format will be removed in next major version
- *
  * Sets the configuration of how code-copter operates.
  *
  * @param {Object} config - Configuration container. 
  * @param {String[]} config.exclude - Array of file/folder names to exclude from analysis.
  * @param {Object} config.analyzers - Keys of analyzer names; values of enabled boolean or custom implementation.
+ * @param {String|Function} config.reporter - Name of packaged or plugin reporter, or custom function to use.
  */
 function set (config) {
-    var analyzers,
-        configObj = {};
+    var analyzers;
 
-    if (config.exclude) {
-        configObj.exclude = config.exclude;
-    }
-
-    if (config.analyzers) {
-        configObj.analyzers =  config.analyzers;
-    }
-
-    configuration = extend.deeply(configuration, configObj);
+    configuration = extend.deeply(configuration, config);
 }

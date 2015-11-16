@@ -3,10 +3,13 @@ var proxyquire = require('proxyquire');
 
 describe('Analyzer factory', function describeAnalyzerFactory () {
     var factory,
-        fakeAnalyzers;
+        fakeAnalyzers,
+        pluginFactory = require('./plugin-factory');
 
     beforeEach(function prepareDepencencies () {
         fakeAnalyzers = {};
+
+        spyOn(pluginFactory, 'create');
 
         factory = proxyquire('./analyzer-factory', {
             './analyzers': fakeAnalyzers
@@ -38,6 +41,7 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
             result = factory.create(testAnalyzerName, false);
 
             expect(result).toBe(null);
+            expect(pluginFactory.create).not.toHaveBeenCalled();
         });
     });
 
@@ -53,10 +57,7 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
     });
 
     it('should return a plugin', function create () {
-        var testAnalyzerName = 'Sigmund',
-            pluginFactory = require('./plugin-factory');
-
-        spyOn(pluginFactory, 'create');
+        var testAnalyzerName = 'Sigmund';
 
         factory.create(testAnalyzerName, true);
 

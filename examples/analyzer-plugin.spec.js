@@ -11,4 +11,4 @@ codeCopter.configure({
     shortrequire: true
 });
 
-describe('Plugin Example', codeCopter);
+describe('Plugin Analyzer Example', codeCopter);

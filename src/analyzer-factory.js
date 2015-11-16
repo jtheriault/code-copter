@@ -3,18 +3,22 @@ var analyzers = require('./analyzers');
 
 exports.create = create;
 
-function create () {
-    return createPackaged.apply(null, arguments) || 
-        createPassThrough.apply(null, arguments) || 
-        createPlugin.apply(null, arguments);
+function create (name, enabled) {
+    if (enabled !== false) {
+        return createPackaged.apply(null, arguments) || 
+            createCustom.apply(null, arguments) || 
+            createPlugin.apply(null, arguments);
+    }
+
+    return null;
 }
 
-function createPackaged (name, config) {
-    return config === true ? analyzers[name] : null;
+function createPackaged (name) {
+    return analyzers[name];
 }
 
-function createPassThrough (name, config) {
-    return typeof config === 'function' ? config : null;
+function createCustom (name, custom) {
+    return typeof custom === 'function' ? custom : null;
 }
 
 function createPlugin (name) {

@@ -2,6 +2,10 @@
 var codeCopter = require('../');
 
 // Disable jscs, but leave jshint enabled
-codeCopter.configure({ jscs: false });
+codeCopter.configure({ 
+    analyzers: {
+        jscs: false 
+    }
+});
 
 describe('Partial Configuration Example', codeCopter);

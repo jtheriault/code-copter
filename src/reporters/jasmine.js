@@ -1,4 +1,6 @@
 'use strict';
+
+// TODO: Name to match the reporter
 module.exports = reportAnalysis;
 
 function toBePassingCodeCopterAnalysis() {
@@ -22,8 +24,8 @@ function toBePassingCodeCopterAnalysis() {
     };
 }
 
-function reportAnalysis (analysis, callback) {
-    describe(analysis.filePath, function describeFileQuality () {
+function reportAnalysis (analysis) {
+    describe(analysis.source, function describeFileQuality () {
         beforeEach(function addMatchers () {
             jasmine.addMatchers({
                 toBePassingCodeCopterAnalysis: toBePassingCodeCopterAnalysis
@@ -32,8 +34,6 @@ function reportAnalysis (analysis, callback) {
 
         it('should pass code copter analysis', function shouldPassMatchers () {
             expect(analysis).toBePassingCodeCopterAnalysis();
-
-            callback();
         });
     });
 }

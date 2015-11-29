@@ -10,8 +10,11 @@ configuration = {
         jscs: true,
         jshint: true
     },
-    exclude: ['coverage', 'node_modules'],
-    reporter: 'jasmine'
+    reporter: 'jasmine',
+    source: {
+        exclude: ['coverage', 'node_modules'],
+        type: 'fs'
+    }
 };
 
 function get () {

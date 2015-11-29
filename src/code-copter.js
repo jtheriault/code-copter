@@ -1,48 +1,26 @@
 'use strict';
-var walk = require('walk'),
-    path = require('path'),
-    fs = require('fs'),
+var sourceRepositoryFactory = require('./source-repository-factory'),
     reporterFactory = require('./reporter-factory'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration');
 
 module.exports = main;
 
-function analyzeFiles (context) {
-    // TODO: Un-nest this function
-    function analyzeFile (root, stats, next) {
-        var filePath = path.join(root, stats.name),
-            analysis;
-        
-        if (path.extname(stats.name) !== '.js') {
-            next();
-        }
-        else {
-            analysis = analyzeSource(filePath, context.analyzers);
-
-            context.reporter(analysis, next);
-        }
-    }
-
-    // TODO: Handle errors
-    walk.walkSync('.', { 
-        filters: context.configuration.exclude,
-        listeners: {
-            file: analyzeFile
-        }
-    });
+function analyzeSourceList (context) {
+    context.sourceList.forEach(analyzeSource.bind(context));
 }
 
-function analyzeSource (filePath, analyzers) {
-    var source = fs.readFileSync(filePath, 'utf8'),
-        analysis = {
+function analyzeSource (source) {
+    var analysis = {
             errors: [],
-            filePath: filePath,
-            pass: true
+            pass: true,
+            source: source.location
         };
 
-    for (let i in analyzers) {
-        let result = analyzers[i](source);
+    /* jshint validthis:true */
+    for (let i in this.analyzers) {
+        /* jshint validthis:true */
+        let result = this.analyzers[i](source.getLines());
 
         if (!result.pass) {
             analysis.errors.push.apply(analysis.errors, result.errors);
@@ -52,6 +30,10 @@ function analyzeSource (filePath, analyzers) {
     analysis.pass = analysis.errors.length === 0;
 
     // TODO: Sort errors
+
+    // TODO: Break this out as a separate task from analysis?
+    this.reporter(analysis);
+
     return analysis;
 }
 
@@ -83,18 +65,41 @@ function loadReporter (context) {
     return context;
 }
 
+function loadSourceList (context) {
+    context.sourceList = context.sourceRepository.getAll();
+
+    if (context.sourceList.length === 0) {
+        throw new Error('No source found');
+    }
+
+    return context;
+}
+
+function loadSourceRepository (context) {
+    var type = context.configuration.source.type,
+        config = context.configuration.source;
+
+    context.sourceRepository = sourceRepositoryFactory.create(type, config);
+
+    return context;
+}
+
 function main () {
     var context,
         tasks;
 
+    // TODO: If I'm doing this, should it just be an instance? If not, why not use module scope?
     context = {};
 
     try {
+        // TODO: A lot of this is tied up in resolving dependencies -- can I infer these better?
         tasks = [
             loadConfiguration,
+            loadSourceRepository,
             loadReporter,
             loadAnalyzers,
-            analyzeFiles
+            loadSourceList,
+            analyzeSourceList
         ].reduce((val, task) => task(val), context);
     }
     catch (error) {

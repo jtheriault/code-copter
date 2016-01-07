@@ -4,6 +4,7 @@ var walk = require('walk'),
     fs = require('fs');
 
 class FileSystemSourceRepository {
+    // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
     // jscs:disable
     constructor (configuration) {
         this.exclude = configuration.exclude;
@@ -12,6 +13,7 @@ class FileSystemSourceRepository {
     }
 
     // TODO: Make this private
+    // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
     // jscs:disable
     appendSourceFile (root, stats, next) {
         var filePath = path.join(root, stats.name);
@@ -28,6 +30,7 @@ class FileSystemSourceRepository {
         next();
     }
 
+    // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
     // jscs:disable
     getAll () {
         if (this.sources === null) {

@@ -24,7 +24,7 @@ function getJscsrc () {
 }
 
 function analyze (actual, expected) {
-    // TOOD: Don't instantiate and configure default every time
+    // TODO: Don't instantiate and configure default every time
     var jscs = new Jscs(),
         config = expected || getJscsrc(),
         errors,

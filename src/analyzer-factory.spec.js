@@ -16,33 +16,18 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
         });
     });
 
-    describe('returning packaged analyzers', function describePackagedAnalyzer () {
+    it('should return packaged analyzers ', function create () {
         var testAnalyzerName,
-            testAnalyzer;
+            testAnalyzer,
+            result;
 
-        beforeEach(function addTestAnalyzer () {
-            testAnalyzerName = 'be-awesome';
-            testAnalyzer = { be: 'awesome' };
+        testAnalyzerName = 'be-awesome';
+        testAnalyzer = { be: 'awesome' };
+        fakeAnalyzers[testAnalyzerName] = testAnalyzer;
+            
+        result = factory.create(testAnalyzerName, true);
 
-            fakeAnalyzers[testAnalyzerName] = testAnalyzer;
-        });
-
-        it('should succeed', function create () {
-            var result;
-
-            result = factory.create(testAnalyzerName, true);
-
-            expect(result).toBe(testAnalyzer);
-        });
-
-        it('should return null for a false configuration', function create () {
-            var result;
-
-            result = factory.create(testAnalyzerName, false);
-
-            expect(result).toBe(null);
-            expect(pluginFactory.create).not.toHaveBeenCalled();
-        });
+        expect(result).toBe(testAnalyzer);
     });
 
     it('should return the configuration', function create () {
@@ -57,10 +42,22 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
     });
 
     it('should return a plugin', function create () {
-        var testAnalyzerName = 'Sigmund';
+        var testAnalyzerName = 'Sigmund',
+            fakeAnalyzer,
+            result;
 
-        factory.create(testAnalyzerName, true);
+        fakeAnalyzer = {
+            analyze: function () {}
+        };
 
+        pluginFactory.create.and.returnValue(fakeAnalyzer);
+        
+        // Packaged analyzers should be ignored
+        fakeAnalyzers[testAnalyzerName] = {};
+
+        result = factory.create(testAnalyzerName, true);
+        
         expect(pluginFactory.create).toHaveBeenCalledWith('analyzer', testAnalyzerName);
+        expect(result).toBe(fakeAnalyzer);
     });
 });

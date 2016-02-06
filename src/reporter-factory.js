@@ -4,9 +4,9 @@ var reporters = require('./reporters');
 exports.create = create;
 
 function create () {
-    return createPackaged.apply(null, arguments) || 
-        createCustom.apply(null, arguments) ||
-        createPlugin.apply(null, arguments);
+    return createPlugin.apply(null, arguments) || 
+        createPackaged.apply(null, arguments) ||
+        createCustom.apply(null, arguments);
 }
 
 function createCustom (custom) {

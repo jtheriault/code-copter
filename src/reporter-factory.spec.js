@@ -63,6 +63,9 @@ describe('Reporter factory', function describeReporterFactory () {
 
             pluginFactory.create.and.returnValue(fakeReporter);
 
+            // Packaged reporters should be ignored
+            fakeReporters[testReporterName] = {};
+
             result = factory.create(testReporterName);
 
             expect(pluginFactory.create).toHaveBeenCalledWith('reporter', testReporterName);

@@ -39,14 +39,45 @@ describe('Reporter factory', function describeReporterFactory () {
         expect(result).toBe(fakeReporter);
     });
 
-    it('should return a plugin', function create () {
-        var testReporterName = 'Sigmund',
+    describe('creating plugins', function describeCreatePlugin () {
+        var pluginFactory,
+            testReporterName;
+
+        beforeEach(function prepareTestData () {
+            testReporterName = 'Greenwald';
+        });
+
+        beforeEach(function spyPluginFactory () {
             pluginFactory = require('./plugin-factory');
 
-        spyOn(pluginFactory, 'create');
+            spyOn(pluginFactory, 'create');
+        });
 
-        factory.create(testReporterName);
+        it('should return a plugin', function create () {
+            var fakeReporter,
+                result;
 
-        expect(pluginFactory.create).toHaveBeenCalledWith('reporter', testReporterName);
+            fakeReporter = {
+                report: function report () {}
+            };
+
+            pluginFactory.create.and.returnValue(fakeReporter);
+
+            result = factory.create(testReporterName);
+
+            expect(pluginFactory.create).toHaveBeenCalledWith('reporter', testReporterName);
+            expect(result).toBe(fakeReporter);
+        });
+
+        it('shoud not return a plugin which is not a reporter', function create () {
+            var result;
+
+            pluginFactory.create.and.returnValue({});
+
+            result = factory.create(testReporterName);
+            
+            expect(pluginFactory.create).toHaveBeenCalledWith('reporter', testReporterName);
+            expect(result).toBe(null);
+        });
     });
 });

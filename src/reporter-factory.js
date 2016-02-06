@@ -18,5 +18,13 @@ function createPackaged (name) {
 }
 
 function createPlugin (name) {
-    return require('./plugin-factory').create('reporter', name);
+    var plugin = require('./plugin-factory').create('reporter', name);
+
+    if (plugin && plugin.report) {
+        return plugin;
+    }
+
+    console.warn(`Plugin found for ${name} is not a reporter`);
+
+    return null;
 }

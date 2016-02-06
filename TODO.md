@@ -5,14 +5,15 @@ egrep -nr '\W+TODO\W+.*$' src/
 Instantiate default JSCS checker once
 
 # 2.0 (hard)
-Fail if no analyzers are configured/loaded
-Fail if no reporter is configured/loaded
-README
-Upgrade dependencies
+Fail if no analyzers are configured/loaded (can just be reported by the reporter)
+Fail if no reporter is configured/loaded (have to throw an exception?)
+Make custom interfaces consistent with plugins?
 Remove TODOs
 Update examples
 * plugins are objects with methods
 * etc
+README
+Upgrade dependencies
 
 # 2.0 (soft)
 order errors by line number
@@ -40,6 +41,9 @@ githubio pages
 # 2.1
 getLines as stream?
 
+# 2.2
+Stand-alone executable
+
 
 # TODO
 create logger
@@ -50,8 +54,7 @@ configure logger
 configure analzyers
 * configuration JSON
 * config file names
-Directory checking
-Clean up analyzer factory (feels clunky)
+Allow analysis of directories (i.e. name, contents)
 
 
 Features

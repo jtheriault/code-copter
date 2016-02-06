@@ -5,16 +5,16 @@ exports.create = create;
 
 function create () {
     return createPackaged.apply(null, arguments) || 
-        createPassThrough.apply(null, arguments) ||
+        createCustom.apply(null, arguments) ||
         createPlugin.apply(null, arguments);
+}
+
+function createCustom (custom) {
+    return typeof custom === 'function' ? custom : null;
 }
 
 function createPackaged (name) {
     return reporters[name] || null;
-}
-
-function createPassThrough (custom) {
-    return typeof custom === 'function' ? custom : null;
 }
 
 function createPlugin (name) {

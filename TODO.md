@@ -6,12 +6,15 @@ Instantiate default JSCS checker once
 
 # 2.0 (hard)
 Prefer plugins over packaged implementations (allow people to get away from stale JSCS, Jasmine, JSHint versions)
+* reporters
 Fail if no analyzers are configured/loaded
 Fail if no reporter is configured/loaded
 README
 Upgrade dependencies
 Remove TODOs
-
+Update examples
+* plugins are objects with methods
+* etc
 
 # 2.0 (soft)
 order errors by line number

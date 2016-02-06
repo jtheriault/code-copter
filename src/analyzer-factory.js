@@ -28,7 +28,7 @@ function createPlugin (name) {
         return plugin;
     }
 
-    console.warn(`Plugin found for ${name} is not an analyzer`);
+    console.warn(`Module found for "${name}" is not a code-copter analyzer plugin`);
 
     return null;
 }

@@ -24,7 +24,7 @@ function createPlugin (name) {
         return plugin;
     }
 
-    console.warn(`Plugin found for ${name} is not a reporter`);
+    console.warn(`Module found for "${name}" is not a code-copter reporter plugin`);
 
     return null;
 }

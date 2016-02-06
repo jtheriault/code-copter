@@ -41,23 +41,41 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
         expect(result).toBe(fakeAnalyzer);
     });
 
-    it('should return a plugin', function create () {
-        var testAnalyzerName = 'Sigmund',
-            fakeAnalyzer,
-            result;
+    describe('creating plugins', function describeCreatePlugin () {
+        var testAnalyzerName;
 
-        fakeAnalyzer = {
-            analyze: function () {}
-        };
+        beforeEach(function prepareTestData () {
+            testAnalyzerName = 'Sigmund';
+        });
 
-        pluginFactory.create.and.returnValue(fakeAnalyzer);
-        
-        // Packaged analyzers should be ignored
-        fakeAnalyzers[testAnalyzerName] = {};
+        it('should return a plugin', function create () {
+            var fakeAnalyzer,
+                result;
 
-        result = factory.create(testAnalyzerName, true);
-        
-        expect(pluginFactory.create).toHaveBeenCalledWith('analyzer', testAnalyzerName);
-        expect(result).toBe(fakeAnalyzer);
+            fakeAnalyzer = {
+                analyze: function analyze () {}
+            };
+
+            pluginFactory.create.and.returnValue(fakeAnalyzer);
+            
+            // Packaged analyzers should be ignored
+            fakeAnalyzers[testAnalyzerName] = {};
+
+            result = factory.create(testAnalyzerName, true);
+            
+            expect(pluginFactory.create).toHaveBeenCalledWith('analyzer', testAnalyzerName);
+            expect(result).toBe(fakeAnalyzer);
+        });
+
+        it('should not return a plugin which is not an analyzer', function create () {
+            var result;
+
+            pluginFactory.create.and.returnValue({});
+
+            result = factory.create(testAnalyzerName, true);
+
+            expect(pluginFactory.create).toHaveBeenCalledWith('analyzer', testAnalyzerName);
+            expect(result).toEqual(null);
+        });
     });
 });

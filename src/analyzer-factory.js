@@ -22,5 +22,13 @@ function createPackaged (name) {
 }
 
 function createPlugin (name) {
-    return require('./plugin-factory').create('analyzer', name);
+    var plugin = require('./plugin-factory').create('analyzer', name);
+
+    if (plugin && plugin.analyze) {
+        return plugin;
+    }
+
+    console.warn(`Plugin found for ${name} is not an analyzer`);
+
+    return null;
 }

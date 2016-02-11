@@ -29,9 +29,6 @@ function analyzeSource (source) {
 
     analysis.pass = analysis.errors.length === 0;
 
-    // TODO: Sort errors
-
-    // TODO: Break this out as a separate task from analysis?
     this.reporter(analysis);
 
     return analysis;
@@ -88,11 +85,9 @@ function main () {
     var context,
         tasks;
 
-    // TODO: If I'm doing this, should it just be an instance? If not, why not use module scope?
     context = {};
 
     try {
-        // TODO: A lot of this is tied up in resolving dependencies -- can I infer these better?
         tasks = [
             loadConfiguration,
             loadSourceRepository,

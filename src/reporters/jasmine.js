@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO: Name to match the reporter
 module.exports = reportAnalysis;
 
 function toBePassingCodeCopterAnalysis() {

@@ -5,7 +5,7 @@
   "scripts": {
     "examples": "scripts/run-examples",
     "ls:todo": "egrep -nr '\\W+TODO\\W+.*$' src/",
-    "prepublish": "npm test && ! npm run ls:todo",
+    "prepublish": "npm test",
     "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",
     "posttest": "istanbul check-coverage",
     "watch:test": "nodemon -i coverage -x npm test"

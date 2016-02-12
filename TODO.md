@@ -18,7 +18,6 @@ order errors by line number
 Handle errors when walking
 Instantiate default JSCS checker once
 DRY out reporter and analyzer factories
-Defined architecture
 Integration test from inline analyzer to inline reporter
 Revisit main path 
 * CQRS style

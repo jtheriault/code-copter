@@ -18,7 +18,6 @@ class FileSystemSourceRepository {
         if (this.sources === null) {
             this.sources = [];
 
-            // TODO: Handle errors
             walk.walkSync('.', { 
                 filters: this.exclude,
                 listeners: {

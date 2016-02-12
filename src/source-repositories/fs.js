@@ -12,24 +12,6 @@ class FileSystemSourceRepository {
         this.sources = null;
     }
 
-    // TODO: Make this private
-    // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
-    // jscs:disable
-    appendSourceFile (root, stats, next) {
-        var filePath = path.join(root, stats.name);
-        
-        if (this.include.indexOf(path.extname(stats.name)) !== -1) {
-            this.sources.push({
-                getLines: function getLines () {
-                    return fs.readFileSync(this.location, 'utf8');
-                },
-                location: filePath
-            });
-        }
-
-        next();
-    }
-
     // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
     // jscs:disable
     getAll () {
@@ -40,13 +22,29 @@ class FileSystemSourceRepository {
             walk.walkSync('.', { 
                 filters: this.exclude,
                 listeners: {
-                    file: this.appendSourceFile.bind(this)
+                    file: appendSourceFile.bind(this)
                 }
             });
         }
 
         return this.sources;
     }
+}
+
+function appendSourceFile (root, stats, next) {
+    /*jshint validthis:true */
+    var filePath = path.join(root, stats.name);
+    
+    if (this.include.indexOf(path.extname(stats.name)) !== -1) {
+        this.sources.push({
+            getLines: function getLines () {
+                return fs.readFileSync(this.location, 'utf8');
+            },
+            location: filePath
+        });
+    }
+
+    next();
 }
 
 module.exports = FileSystemSourceRepository;

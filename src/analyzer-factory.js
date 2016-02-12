@@ -7,14 +7,14 @@ function create (name, enabled) {
     if (enabled !== false) {
         return createPlugin.apply(null, arguments) ||
             createPackaged.apply(null, arguments) || 
-            createCustom.apply(null, arguments);
+            createInline.apply(null, arguments);
     }
 
     return null;
 }
 
-function createCustom (name, custom) {
-    return typeof custom === 'function' ? custom : null;
+function createInline (name, inline) {
+    return typeof inline === 'function' ? inline : null;
 }
 
 function createPackaged (name) {

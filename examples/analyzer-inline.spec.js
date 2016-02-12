@@ -17,4 +17,4 @@ codeCopter.configure({
     }
 });
 
-describe('Custom Analayzer Example', codeCopter);
+describe('Inline Analayzer Example', codeCopter);

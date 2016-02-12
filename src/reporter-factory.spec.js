@@ -28,7 +28,7 @@ describe('Reporter factory', function describeReporterFactory () {
         expect(result).toBe(testReporter);
     });
 
-    it('should return a custom reporter', function create () {
+    it('should return an inline reporter', function create () {
         var testConfiguration,
             result;
 

@@ -30,7 +30,7 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
         expect(result).toBe(testAnalyzer);
     });
 
-    it('should return the configuration', function create () {
+    it('should return an inline analyzer', function create () {
         var testConfiguration,
             result;
 

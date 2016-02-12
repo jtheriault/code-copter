@@ -6,11 +6,11 @@ exports.create = create;
 function create () {
     return createPlugin.apply(null, arguments) || 
         createPackaged.apply(null, arguments) ||
-        createCustom.apply(null, arguments);
+        createInline.apply(null, arguments);
 }
 
-function createCustom (custom) {
-    return typeof custom === 'function' ? custom : null;
+function createInline (inline) {
+    return typeof inline === 'function' ? inline : null;
 }
 
 function createPackaged (name) {

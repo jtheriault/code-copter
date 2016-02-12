@@ -2,7 +2,6 @@
 
 
 # 2.0 (hard)
-Rename custom analyzer/reporter as inline
 Update examples
 * plugins are objects with methods
 * etc
@@ -20,7 +19,7 @@ Handle errors when walking
 Instantiate default JSCS checker once
 DRY out reporter and analyzer factories
 Defined architecture
-Integration test from custom analyzer to custom reporter
+Integration test from inline analyzer to inline reporter
 Revisit main path 
 * CQRS style
 * separate steps to be more granular (e.g. separate reporting from analyzing)

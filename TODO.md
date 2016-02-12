@@ -1,8 +1,8 @@
 # Find in files
-egrep -nr '\W+TODO\W+.*$' src/
+
 
 # 2.0 (hard)
-Remove TODOs
+Rename custom analyzer/reporter as inline
 Update examples
 * plugins are objects with methods
 * etc

@@ -5,7 +5,7 @@ var walk = require('walk'),
 
 class FileSystemSourceRepository {
     // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
-    // jscs:disable
+    // jscs:disable disallowAnonymousFunctions
     constructor (configuration) {
         this.exclude = configuration.exclude;
         this.include = ['.js'];
@@ -13,7 +13,7 @@ class FileSystemSourceRepository {
     }
 
     // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
-    // jscs:disable
+    // jscs:disable disallowAnonymousFunctions
     getAll () {
         if (this.sources === null) {
             this.sources = [];

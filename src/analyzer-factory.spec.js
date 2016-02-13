@@ -19,16 +19,24 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
 
     it('should return packaged analyzers ', function create () {
         var testAnalyzerName,
-            testAnalyzer,
+            fakeAnalyzer,
             result;
 
         testAnalyzerName = 'be-awesome';
-        testAnalyzer = { be: 'awesome' };
-        fakeAnalyzers[testAnalyzerName] = testAnalyzer;
+        fakeAnalyzer = { be: 'awesome' };
+        fakeAnalyzers[testAnalyzerName] = fakeAnalyzer;
             
-        result = factory.create(testAnalyzerName, true);
+        result = factory.create(testAnalyzerName);
 
-        expect(result).toBe(testAnalyzer);
+        expect(result).toBe(fakeAnalyzer);
+    });
+
+    it('should allow exclusion of packaged analyzers', function create () {
+        var testAnalyzerName;
+
+        fakeAnalyzers[testAnalyzerName] = { totallyValid: true };
+
+        expect(factory.create(testAnalyzerName, false)).toEqual(null);
     });
 
     it('should return an inline analyzer', function create () {

@@ -4,14 +4,10 @@ var analyzers = require('./analyzers'),
 
 exports.create = create;
 
-function create (name, enabled) {
-    if (enabled !== false) {
-        return createPlugin.apply(null, arguments) ||
-            createPackaged.apply(null, arguments) || 
-            createInline.apply(null, arguments);
-    }
-
-    return null;
+function create (name, config) {
+    return createPlugin(name) ||
+        createPackaged(name, config) || 
+        createInline(name, config);
 }
 
 function createInline (name, inline) {
@@ -24,8 +20,8 @@ function createInline (name, inline) {
     return analyzer;
 }
 
-function createPackaged (name) {
-    return analyzers[name];
+function createPackaged (name, enabled) {
+    return enabled !== false ? analyzers[name] : null;
 }
 
 function createPlugin (name) {

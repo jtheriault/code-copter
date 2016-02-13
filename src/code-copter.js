@@ -20,7 +20,7 @@ function analyzeSource (source) {
     /* jshint validthis:true */
     for (let i in this.analyzers) {
         /* jshint validthis:true */
-        let result = this.analyzers[i](source.getLines());
+        let result = this.analyzers[i].analyze(source.getLines());
 
         if (!result.pass) {
             analysis.errors.push.apply(analysis.errors, result.errors);

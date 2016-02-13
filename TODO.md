@@ -1,6 +1,7 @@
 # 2.0 (hard)
-BUG: "Could not run code copter analysis due to error [Error: Expected to find JSCS configuration" even when jscs is false
 FIX: Note which analyzer is reporting an error
+FIX: Disable packaged analyzers if no configuration is found
+FIX: Export Analyzer type for plugins to use
 Update examples
 * plugins are objects with methods
 * clear/common output

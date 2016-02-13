@@ -1,0 +1,8 @@
+{
+  "name": "code-copter-analyzer-hell-no-world",
+  "version": "1.0.0",
+  "description": "An example of an implementation of an analyzer plugin which fails for 'Hello world' programs.",
+  "main": "index.js",
+  "license": "ISC",
+  "private": true
+}

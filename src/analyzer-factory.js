@@ -1,5 +1,6 @@
 'use strict';
-var analyzers = require('./analyzers');
+var analyzers = require('./analyzers'),
+    Analyzer = require('./Analyzer');
 
 exports.create = create;
 
@@ -14,7 +15,13 @@ function create (name, enabled) {
 }
 
 function createInline (name, inline) {
-    return typeof inline === 'function' ? inline : null;
+    var analyzer = null;
+
+    if (typeof inline === 'function') {
+        analyzer = new Analyzer({ analyze: inline });
+    }
+    
+    return analyzer;
 }
 
 function createPackaged (name) {
@@ -24,11 +31,14 @@ function createPackaged (name) {
 function createPlugin (name) {
     var plugin = require('./plugin-factory').create('analyzer', name);
 
-    if (plugin && plugin.analyze) {
-        return plugin;
+    if (plugin) {
+        try {
+            return plugin instanceof Analyzer ? plugin : new Analyzer(plugin);
+        }
+        catch (e) {
+            console.warn(`Module found for "${name}" is not a code-copter analyzer plugin`);
+        }
     }
-
-    console.warn(`Module found for "${name}" is not a code-copter analyzer plugin`);
 
     return null;
 }

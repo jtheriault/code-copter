@@ -1,10 +1,13 @@
 'use strict';
-var fs = require('fs'),
+var Analyzer = require('../Analyzer'),
+    fs = require('fs'),
     jshintrcPath = process.cwd() + '/.jshintrc',
     jshintrc,
     jshint = require('jshint').JSHINT;
 
-module.exports = analyze;
+module.exports = new Analyzer({
+    analyze: analyze
+});
 
 /**
  * Gets the object representation of the configuration in .jshintrc in the 

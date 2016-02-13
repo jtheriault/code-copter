@@ -1,9 +1,10 @@
-# Find in files
-
-
 # 2.0 (hard)
+BUG: "Could not run code copter analysis due to error [Error: Expected to find JSCS configuration" even when jscs is false
+FIX: Note which analyzer is reporting an error
 Update examples
 * plugins are objects with methods
+* clear/common output
+* subpackages for greater accuracy
 * etc
 Unit tests of everything
 README
@@ -27,6 +28,7 @@ Infer dependencies better
 * let the factories know about discovery -- hide impls outside main folder
 * the problem with configuration is the confusion of c-c as module and utility
 * most configuration is "which," some will be how and needs to get stored with the dependency instance  
+jsdocs?
 
 # Roadmap
 ## Post 2.0
@@ -50,7 +52,3 @@ Stand-alone executable
 ** configuration JSON
 ** config file names
 * Allow analysis of directories (i.e. name, contents)
-
-
-Features
-* jsdocs?

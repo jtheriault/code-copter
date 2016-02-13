@@ -1,10 +1,13 @@
 'use strict';
-var fs = require('fs'),
+var Analyzer = require('../Analyzer'),
+    fs = require('fs'),
     jscsrcPath = process.cwd() + '/.jscsrc',
     jscsrc,
     Jscs = require('jscs');
 
-module.exports = analyze;
+module.exports = new Analyzer({
+    analyze: analyze
+});
 
 /**
  * Get the object representation of the configuration in .jscsrc in the project

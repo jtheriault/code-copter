@@ -2,6 +2,7 @@
 FIX: Note which analyzer is reporting an error
 FIX: Disable packaged analyzers if no configuration is found
 FIX: Export Analyzer type for plugins to use
+Analysis/error types?
 Update examples
 * plugins are objects with methods
 * clear/common output

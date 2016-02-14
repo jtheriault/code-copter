@@ -4,5 +4,8 @@
   "description": "An example of an implementation of an analyzer plugin which fails for 'Hello world' programs.",
   "main": "index.js",
   "license": "ISC",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "code-copter": "file:../../.."
+  }
 }

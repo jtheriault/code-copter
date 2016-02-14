@@ -1,7 +1,9 @@
 'use strict';
-module.exports = {
+var Analyzer = require('code-copter').Analyzer;
+
+module.exports = new Analyzer({
     analyze: analyze
-};
+});
 
 function analyze (sourceFileText) {
     var lineSaysHelloWorld,

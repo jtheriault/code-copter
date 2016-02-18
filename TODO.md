@@ -1,14 +1,14 @@
 # 2.0 (hard)
 FIX: Note which analyzer is reporting an error
 FIX: Disable packaged analyzers if no configuration is found
-FIX: Export Analyzer type for plugins to use
-Analysis/error types?
+What happened to watch:test?
 Update examples
 * plugins are objects with methods
 * clear/common output
 * subpackages for greater accuracy
 * etc
 Unit tests of everything
+Remove skipped tests
 README
 Upgrade dependencies
 Set code coverage limit: 100%

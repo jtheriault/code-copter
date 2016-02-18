@@ -6,7 +6,8 @@ var Analyzer = require('../Analyzer'),
     jshint = require('jshint').JSHINT;
 
 module.exports = new Analyzer({
-    analyze: analyze
+    analyze: analyze,
+    name: 'JSHint'
 });
 
 /**

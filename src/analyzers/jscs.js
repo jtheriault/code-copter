@@ -6,7 +6,8 @@ var Analyzer = require('../Analyzer'),
     Jscs = require('jscs');
 
 module.exports = new Analyzer({
-    analyze: analyze
+    analyze: analyze,
+    name: 'JSCS'
 });
 
 /**

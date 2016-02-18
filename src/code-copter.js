@@ -2,7 +2,8 @@
 var sourceRepositoryFactory = require('./source-repository-factory'),
     reporterFactory = require('./reporter-factory'),
     analyzerFactory = require('./analyzer-factory'),
-    configuration = require('./configuration');
+    configuration = require('./configuration'),
+    Analysis = require('./Analysis');
 
 module.exports = main;
 
@@ -11,23 +12,24 @@ function analyzeSourceList (context) {
 }
 
 function analyzeSource (source) {
-    var analysis = {
-            errors: [],
-            pass: true,
-            source: source.location
-        };
-
     /* jshint validthis:true */
-    for (let i in this.analyzers) {
-        /* jshint validthis:true */
-        let result = this.analyzers[i].analyze(source.getLines());
+    var analysis = new Analysis({
+            target: source.location
+        });
 
-        if (!result.pass) {
-            analysis.errors.push.apply(analysis.errors, result.errors);
+    for (let analyzerIndex in this.analyzers) {
+        let analyzer = this.analyzers[analyzerIndex],
+            result = analyzer.analyze(source.getLines());
+
+        for (let errorIndex in result.errors) {
+            let error = result.errors[errorIndex];
+
+            analysis.addError({
+                line: error.line,
+                message: `${error.message} [${analyzer.name}]`
+            });
         }
     }
-
-    analysis.pass = analysis.errors.length === 0;
 
     this.reporter(analysis);
 

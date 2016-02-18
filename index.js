@@ -1,5 +1,6 @@
 'use strict';
-var Analyzer = require('./src').Analyzer,
+var Analysis = require('./src').Analysis,
+    Analyzer = require('./src').Analyzer,
     analyzers = require('./src').analyzers,
     codeCopter = require('./src').codeCopter,
     configuration = require('./src').configuration;

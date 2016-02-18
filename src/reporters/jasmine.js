@@ -2,7 +2,7 @@
 
 module.exports = reportAnalysis;
 
-function toBePassingCodeCopterAnalysis() {
+function toPassCodeCopterAnalysis() {
     return {
         compare: function compare (analysis) {
             var result = {};
@@ -24,15 +24,15 @@ function toBePassingCodeCopterAnalysis() {
 }
 
 function reportAnalysis (analysis) {
-    describe(analysis.source, function describeFileQuality () {
+    describe(analysis.target, function describeFileQuality () {
         beforeEach(function addMatchers () {
             jasmine.addMatchers({
-                toBePassingCodeCopterAnalysis: toBePassingCodeCopterAnalysis
+                toPassCodeCopterAnalysis: toPassCodeCopterAnalysis
             });
         });
 
         it('should pass code copter analysis', function shouldPassMatchers () {
-            expect(analysis).toBePassingCodeCopterAnalysis();
+            expect(analysis).toPassCodeCopterAnalysis();
         });
     });
 }

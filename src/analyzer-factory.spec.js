@@ -58,7 +58,8 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
         beforeEach(function prepareTestData () {
             testAnalyzerName = 'Sigmund';
             testAnalyzerParameters = {
-                analyze: function analyze () {}
+                analyze: function analyze () {},
+                name: 'test plugin analyzer'
             };
         });
 

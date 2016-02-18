@@ -5,7 +5,8 @@ describe('Analyzer type', function describeAnalyzerType () {
 
     beforeEach(function prepareTestData () {
         validParameters = {
-            analyze: jasmine.createSpy('analyze')
+            analyze: jasmine.createSpy('analyze'),
+            name: 'test analyzer'
         };
     });
 
@@ -15,19 +16,27 @@ describe('Analyzer type', function describeAnalyzerType () {
     });
 
     it('should instantiate with required parameters', function constructor () {
-        var result;
+        var analyzer;
 
         expect(function instantiateAnalyzer () {
-            result = new Analyzer(validParameters);
+            analyzer = new Analyzer(validParameters);
         }).not.toThrow();
 
-        expect(result).toEqual(jasmine.objectContaining(validParameters));
+        expect(analyzer).toEqual(jasmine.objectContaining(validParameters));
     });
 
     it('should require instantiation', function constructor () {
         expect(function callAnalyzer () {
             /* jshint newcap:false */
             Analyzer(validParameters);
+        }).toThrow();
+    });
+
+    it('should not allow modification of structure', function shouldBeSealed () {
+        var analyzer = new Analyzer(validParameters);
+        
+        expect(function monkeyPatchAnalyzer () {
+            analyzer.isAwesome = true;
         }).toThrow();
     });
 
@@ -39,6 +48,14 @@ describe('Analyzer type', function describeAnalyzerType () {
 
     it('should require analyze function parameter', function constructor () {
         delete validParameters.analyze;
+
+        expect(function instantiateAnalayzer () {
+            new Analyzer(validParameters);
+        }).toThrow();
+    });
+
+    it('should require name parameter', function constructor () {
+        delete validParameters.name;
 
         expect(function instantiateAnalayzer () {
             new Analyzer(validParameters);

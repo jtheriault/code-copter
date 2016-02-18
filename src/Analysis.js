@@ -3,8 +3,12 @@ var assert = require('assert');
 
 class Analysis {
     /* jscs:disable disallowAnonymousFunctions */
-    constructor () {
+    constructor (parameters) {
+        this.target = parameters && parameters.target ? parameters.target : '';
+
         this.errors = [];
+
+        Object.seal(this);
     }
 
     /* jscs:disable disallowAnonymousFunctions */

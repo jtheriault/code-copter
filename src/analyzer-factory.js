@@ -14,7 +14,10 @@ function createInline (name, inline) {
     var analyzer = null;
 
     if (typeof inline === 'function') {
-        analyzer = new Analyzer({ analyze: inline });
+        analyzer = new Analyzer({ 
+            analyze: inline,
+            name: inline.name
+        });
     }
     
     return analyzer;

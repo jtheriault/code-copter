@@ -1,12 +1,12 @@
 # 2.0 (hard)
-FIX: Note which analyzer is reporting an error
 FIX: Disable packaged analyzers if no configuration is found
-What happened to watch:test?
 Update examples
 * plugins are objects with methods
 * clear/common output
 * subpackages for greater accuracy
 * etc
+Performance tuning
+What happened to watch:test?
 Unit tests of everything
 Remove skipped tests
 README

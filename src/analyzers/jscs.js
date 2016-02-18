@@ -1,5 +1,6 @@
 'use strict';
-var Analyzer = require('../Analyzer'),
+var Analysis = require('../Analysis'),
+    Analyzer = require('../Analyzer'),
     fs = require('fs'),
     jscsrcPath = process.cwd() + '/.jscsrc',
     jscsrc,
@@ -30,16 +31,21 @@ function getJscsrc () {
 function analyze (actual, expected) {
     var jscs = new Jscs(),
         config = expected || getJscsrc(),
-        errors,
-        result = { pass: true };
+        analysis;
+
+    analysis = new Analysis();
 
     jscs.registerDefaultRules();
     jscs.configure(config);
 
-    errors = jscs.checkString(actual).getErrorList();
-    result.pass = errors.length === 0;
+    jscs.checkString(actual)
+        .getErrorList()
+        .forEach(error => {
+            analysis.addError({ 
+                line: error.line, 
+                message: error.message 
+            });
+        });
 
-    result.errors = errors.map(error => ({ line: error.line, message: error.message }));
-
-    return result;
+    return analysis;
 }

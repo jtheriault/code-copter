@@ -1,5 +1,6 @@
 'use strict';
-var Analyzer = require('../Analyzer'),
+var Analysis = require('../Analysis'),
+    Analyzer = require('../Analyzer'),
     fs = require('fs'),
     jshintrcPath = process.cwd() + '/.jshintrc',
     jshintrc,
@@ -29,13 +30,17 @@ function getJshintrc () {
 
 function analyze (actual) {
     var config = getJshintrc(),
-        result = { pass: true };
+        analysis = new Analysis();
 
     jshint(actual, jshintrc);
-    result.pass = jshint.errors.length === 0;
+    
+    jshint.errors
+        .forEach(error => {
+            analysis.addError({ 
+                line: error.line, 
+                message: error.raw 
+            });
+        });
 
-    result.errors = jshint.errors
-        .map(error => ({ line: error.line, message: error.raw }));
-
-    return result;
+    return analysis;
 }

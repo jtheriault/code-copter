@@ -17,13 +17,10 @@ function analyzeSource (source) {
             target: source.location
         });
 
-    for (let analyzerIndex in this.analyzers) {
-        let analyzer = this.analyzers[analyzerIndex],
-            result = analyzer.analyze(source.getLines());
+    for (let analyzer of this.analyzers) {
+        let result = analyzer.analyze(source.getLines());
 
-        for (let errorIndex in result.errors) {
-            let error = result.errors[errorIndex];
-
+        for (let error of result.errors) {
             analysis.addError({
                 line: error.line,
                 message: `${error.message} [${analyzer.name}]`

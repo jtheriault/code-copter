@@ -1,34 +1,28 @@
 'use strict';
-var Analyzer = require('code-copter').Analyzer;
+var Analysis = require('code-copter').Analysis,
+    Analyzer = require('code-copter').Analyzer;
 
 module.exports = new Analyzer({
-    analyze: analyze
+    analyze: analyze,
+    name: 'Hell(n)o World!'
 });
 
 function analyze (sourceFileText) {
     var lineSaysHelloWorld,
-        errors,
-        result;
+        analysis = new Analysis();
     
     lineSaysHelloWorld = sourceFileText.split('\n').map(saysHelloWorld);
 
-    errors = [];
-
     lineSaysHelloWorld.forEach(function appendErrorLine (isError, lineNumber) {
         if (isError) {
-            errors.push({
+            analysis.addError({
                 line: lineNumber + 1,
                 message: 'At least make it look like you didn\'t copy the demo code!'
             });
         }
     });
 
-    result = {
-        errors: errors,
-        pass: errors.length === 0
-    };
-
-    return result;
+    return analysis;
 }
 
 function saysHelloWorld(text) {

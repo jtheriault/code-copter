@@ -5,7 +5,10 @@ var Analysis = require('./src').Analysis,
     codeCopter = require('./src').codeCopter,
     configuration = require('./src').configuration;
 
+// API
 module.exports = codeCopter;
-module.exports.Analyzer = Analyzer;
-module.exports.analyzers = analyzers;
 module.exports.configure = configuration.set;
+
+// SDK
+module.exports.Analysis = Analysis;
+module.exports.Analyzer = Analyzer;

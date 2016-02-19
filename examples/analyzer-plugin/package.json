@@ -2,7 +2,6 @@
   "name": "code-copter-example-analyzer-plugin-usage",
   "version": "1.0.0",
   "description": "An example of an implementation of an analyzer plugin and a project incorporating it.",
-  "main": "index.js",
   "scripts": {
     "test": "jasmine"
   },

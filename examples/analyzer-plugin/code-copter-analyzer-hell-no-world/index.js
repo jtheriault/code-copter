@@ -7,6 +7,12 @@ module.exports = new Analyzer({
     name: 'Hell(n)o World!'
 });
 
+/**
+ * Analyze file source data for the case-insensitive phrase "Hello world."
+ *
+ * @param {FileSourceData} fileSourceData
+ * @returns {Analysis}
+ */
 function analyze (fileSourceData) {
     var analysis = new Analysis();
         
@@ -22,6 +28,12 @@ function analyze (fileSourceData) {
     return analysis;
 }
 
+/**
+ * Determines whether a string contains the case-insentive phrase "Hello world."
+ *
+ * @param {String} text - The text to check
+ * @returns {Boolean} - True if the text contains "Hello world;" otherwise false.
+ */
 function saysHelloWorld(text) {
     return text.match(/\Whello world\W/i) !== null;
 }

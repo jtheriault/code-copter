@@ -7,20 +7,17 @@ module.exports = new Analyzer({
     name: 'Hell(n)o World!'
 });
 
-function analyze (sourceFileText) {
-    var lineSaysHelloWorld,
-        analysis = new Analysis();
-    
-    lineSaysHelloWorld = sourceFileText.split('\n').map(saysHelloWorld);
-
-    lineSaysHelloWorld.forEach(function appendErrorLine (isError, lineNumber) {
-        if (isError) {
+function analyze (fileSourceData) {
+    var analysis = new Analysis();
+        
+    for (let sample of fileSourceData) {
+        if (saysHelloWorld(sample.text)) {
             analysis.addError({
-                line: lineNumber + 1,
-                message: 'At least make it look like you didn\'t copy the demo code!'
+                line: sample.line,
+                message: 'At least try to look like you didn\'t copy the demo code!'
             });
         }
-    });
+    }
 
     return analysis;
 }

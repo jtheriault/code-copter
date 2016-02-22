@@ -28,16 +28,16 @@ function getJshintrc () {
     return jshintrc;
 }
 
-function analyze (actual) {
+function analyze (fileSourceData) {
     var config = getJshintrc(),
         analysis = new Analysis();
 
-    jshint(actual, jshintrc);
+    jshint(fileSourceData.text, jshintrc);
     
     jshint.errors
         .forEach(error => {
             analysis.addError({ 
-                line: error.line, 
+                line: (error.line + fileSourceData.lineStart) - 1, 
                 message: error.raw 
             });
         });

@@ -3,7 +3,8 @@ var sourceRepositoryFactory = require('./source-repository-factory'),
     reporterFactory = require('./reporter-factory'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration'),
-    Analysis = require('./Analysis');
+    Analysis = require('./Analysis'),
+    FileSourceData = require('./FileSourceData');
 
 module.exports = main;
 
@@ -15,10 +16,15 @@ function analyzeSource (source) {
     /* jshint validthis:true */
     var analysis = new Analysis({
             target: source.location
-        });
+        }),
+        fileSourceData;
+
+    fileSourceData  = new FileSourceData({
+        text: source.getLines()
+    });
 
     for (let analyzer of this.analyzers) {
-        let result = analyzer.analyze(source.getLines());
+        let result = analyzer.analyze(fileSourceData);
 
         for (let error of result.errors) {
             analysis.addError({

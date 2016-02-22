@@ -28,9 +28,9 @@ function getJscsrc () {
     return jscsrc;
 }
 
-function analyze (actual, expected) {
+function analyze (fileSourceData) {
     var jscs = new Jscs(),
-        config = expected || getJscsrc(),
+        config = getJscsrc(),
         analysis;
 
     analysis = new Analysis();
@@ -38,11 +38,11 @@ function analyze (actual, expected) {
     jscs.registerDefaultRules();
     jscs.configure(config);
 
-    jscs.checkString(actual)
+    jscs.checkString(fileSourceData.text)
         .getErrorList()
         .forEach(error => {
             analysis.addError({ 
-                line: error.line, 
+                line: (error.line + fileSourceData.lineStart) - 1, 
                 message: error.message 
             });
         });

@@ -8,10 +8,10 @@ module.exports = new Analyzer({
 });
 
 /**
- * Analyze file source data for the case-insensitive phrase "Hello world."
+ * Analyze file source data for the case-insensitive phrase "Hello world".
  *
- * @param {FileSourceData} fileSourceData
- * @returns {Analysis}
+ * @param {FileSourceData} fileSourceData - The file source data to analyze.
+ * @returns {Analysis} - The analysis of the file source data.
  */
 function analyze (fileSourceData) {
     var analysis = new Analysis();
@@ -29,7 +29,7 @@ function analyze (fileSourceData) {
 }
 
 /**
- * Determines whether a string contains the case-insentive phrase "Hello world."
+ * Determines whether a string contains the case-insentive phrase "Hello world".
  *
  * @param {String} text - The text to check
  * @returns {Boolean} - True if the text contains "Hello world;" otherwise false.

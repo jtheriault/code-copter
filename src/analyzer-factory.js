@@ -5,9 +5,23 @@ var analyzers = require('./analyzers'),
 exports.create = create;
 
 function create (name, config) {
-    return createPlugin(name) ||
+    var analyzer;
+    
+    analyzer = createPlugin(name) ||
         createPackaged(name, config) || 
         createInline(name, config);
+
+    try {
+        if (analyzer) {
+            analyzer.configure(config);
+        }
+    }
+    catch (error) {
+        console.warn(`Not loading analyzer "${name}" because ${error.message}`);
+        analyzer = null;
+    }
+
+    return analyzer;
 }
 
 function createInline (name, inline) {
@@ -23,8 +37,8 @@ function createInline (name, inline) {
     return analyzer;
 }
 
-function createPackaged (name, enabled) {
-    return enabled !== false ? analyzers[name] : null;
+function createPackaged (name) {
+    return analyzers[name]; 
 }
 
 function createPlugin (name) {

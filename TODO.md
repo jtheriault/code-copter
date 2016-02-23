@@ -1,8 +1,7 @@
 # 2.0 (hard)
-Split lines before analyze? helper object (just text and line iterator at first)?
 FIX: Disable packaged analyzers if no configuration is found
 Update examples
-* plugins are objects with methods
+* reporter plugin is object with methods
 * clear/common output
 * subpackages for greater accuracy
 * etc

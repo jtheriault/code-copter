@@ -17,26 +17,51 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
         });
     });
 
-    it('should return packaged analyzers ', function create () {
-        var testAnalyzerName,
-            fakeAnalyzer,
-            result;
+    describe('creating packaged analyzers', function describeCreatePackagedAnalyzer () {
+        var fakeAnalyzer,
+            testAnalyzerName;
 
-        testAnalyzerName = 'be-awesome';
-        fakeAnalyzer = { be: 'awesome' };
-        fakeAnalyzers[testAnalyzerName] = fakeAnalyzer;
-            
-        result = factory.create(testAnalyzerName);
+        beforeEach(function prepareTestData () {
+            testAnalyzerName = 'awesome';
+            fakeAnalyzer = new Analyzer({ 
+                analyze: function analyze () {},
+                name: 'awesome'
+            });
+            fakeAnalyzers[testAnalyzerName] = fakeAnalyzer;
+        });
 
-        expect(result).toBe(fakeAnalyzer);
-    });
+        it('should return packaged analyzers ', function create () {
+            var result;
+                
+            result = factory.create(testAnalyzerName);
 
-    it('should allow exclusion of packaged analyzers', function create () {
-        var testAnalyzerName;
+            expect(result).toBe(fakeAnalyzer);
+        });
 
-        fakeAnalyzers[testAnalyzerName] = { totallyValid: true };
+        it('should configure analyzer', function create () {
+            var testConfig;
 
-        expect(factory.create(testAnalyzerName, false)).toEqual(null);
+            testConfig = {
+                be: 'awesome!'
+            };
+
+            spyOn(fakeAnalyzer, 'configure');
+
+            factory.create(testAnalyzerName, testConfig);
+
+            expect(fakeAnalyzer.configure).toHaveBeenCalledWith(testConfig);
+        });
+
+        it('should return null if configuring throws an error', function create () {
+            var result;
+
+            spyOn(fakeAnalyzer, 'configure').and.throwError();
+
+            result = factory.create(testAnalyzerName);
+
+            expect(result).toEqual(null);
+            expect(fakeAnalyzer.configure).toHaveBeenCalled();
+        });
     });
 
     it('should return an inline analyzer', function create () {
@@ -52,7 +77,8 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
     });
 
     describe('creating plugins', function describeCreatePlugin () {
-        var testAnalyzerName,
+        var fakeAnalyzer,
+            testAnalyzerName,
             testAnalyzerParameters;
 
         beforeEach(function prepareTestData () {
@@ -61,16 +87,15 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
                 analyze: function analyze () {},
                 name: 'test plugin analyzer'
             };
-        });
-
-        it('should return an analyzer plugin (and not a packaged analyzer)', function create () {
-            var fakeAnalyzer,
-                result;
-
-            fakeAnalyzers[testAnalyzerName] = {};
 
             fakeAnalyzer = new Analyzer(testAnalyzerParameters);
             pluginFactory.create.and.returnValue(fakeAnalyzer);
+        });
+
+        it('should return an analyzer plugin (and not a packaged analyzer)', function create () {
+            var result;
+
+            fakeAnalyzers[testAnalyzerName] = {};
 
             result = factory.create(testAnalyzerName);
 
@@ -97,6 +122,31 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
             result = factory.create(testAnalyzerName, true);
 
             expect(result).toEqual(null);
+        });
+
+        it('should configure analyzer', function create () {
+            var testConfig;
+
+            testConfig = {
+                be: 'awesome!'
+            };
+
+            spyOn(fakeAnalyzer, 'configure').and.throwError();
+
+            factory.create(testAnalyzerName, testConfig);
+
+            expect(fakeAnalyzer.configure).toHaveBeenCalledWith(testConfig);
+        });
+
+        it('should return null if configuring throws an error', function create () {
+            var result;
+
+            spyOn(fakeAnalyzer, 'configure').and.throwError();
+
+            result = factory.create(testAnalyzerName);
+
+            expect(result).toEqual(null);
+            expect(fakeAnalyzer.configure).toHaveBeenCalled();
         });
     });
 });

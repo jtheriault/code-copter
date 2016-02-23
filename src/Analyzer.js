@@ -9,10 +9,15 @@ class Analyzer {
         assert(parameters.name, 'A name must be provided');
 
         this.analyze = parameters.analyze;
+        this.configure = parameters.configure || configure;
         this.name = parameters.name;
 
         Object.seal(this);
     }
+}
+
+function configure (enabled) {
+    assert(enabled !== false, 'Analyzer must be configured to be enabled');
 }
 
 module.exports = Analyzer;

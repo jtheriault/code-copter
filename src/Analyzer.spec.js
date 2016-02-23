@@ -6,6 +6,7 @@ describe('Analyzer type', function describeAnalyzerType () {
     beforeEach(function prepareTestData () {
         validParameters = {
             analyze: jasmine.createSpy('analyze'),
+            configure: jasmine.createSpy('configure'),
             name: 'test analyzer'
         };
     });
@@ -60,5 +61,25 @@ describe('Analyzer type', function describeAnalyzerType () {
         expect(function instantiateAnalayzer () {
             new Analyzer(validParameters);
         }).toThrow();
+    });
+
+    describe('default configuration', function describeConfiguration () {
+        var analyzer;
+
+        beforeEach(function instantiateDefaultConfiguredAnalyzer () {
+            delete validParameters.configure;
+
+            analyzer = new Analyzer(validParameters);
+        });
+
+        it('should not throw an error', function configure () {
+            expect(analyzer.configure).not.toThrow();
+        });
+
+        it('should error if configuration is disabled', function configure () {
+            expect(function disableConfiguration () {
+                analyzer.configure(false);
+            }).toThrow();
+        });
     });
 });

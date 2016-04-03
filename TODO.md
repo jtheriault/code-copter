@@ -1,5 +1,4 @@
 # 2.0 (hard)
-FIX: Disable packaged analyzers if no configuration is found
 Update examples
 * reporter plugin is object with methods
 * clear/common output

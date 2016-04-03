@@ -1,11 +1,11 @@
 'use strict';
 describe('JSHint analyzer', function describeJshintAnalyzer () {
-    var jshintAnalyzer = require('./jshint'),
-        Analyzer = require('../Analyzer'),
+    var Analyzer = require('../Analyzer'),
         Analysis = require('../Analysis'),
         FileSourceData = require('../FileSourceData'),
+        fs = require('fs'),
         jshint = require('jshint'),
-        fs = require('fs');
+        jshintAnalyzer = require('./jshint');
 
     it('should export an analyzer', function shouldExportAnalyzer () {
         expect(jshintAnalyzer).toEqual(jasmine.any(Analyzer));
@@ -32,7 +32,7 @@ describe('JSHint analyzer', function describeJshintAnalyzer () {
             spyOn(jshint, 'JSHINT');
             jshint.JSHINT.errors = [];
 
-            spyOn(fs, 'readFileSync').and.returnValue(JSON.stringify(testConfiguration));
+            spyOn(fs, 'readFileSync');
         });
 
         it('should use the provided configuration', function configure () {
@@ -53,6 +53,7 @@ describe('JSHint analyzer', function describeJshintAnalyzer () {
                 expectedPath = mockCwd + '/.jshintrc';
 
             spyOn(process, 'cwd').and.returnValue(mockCwd);
+            fs.readFileSync.and.returnValue(JSON.stringify(testConfiguration));
 
             jshintAnalyzer.configure(true);
             jshintAnalyzer.analyze({});
@@ -67,6 +68,8 @@ describe('JSHint analyzer', function describeJshintAnalyzer () {
             expect(function callConfigure () {
                 jshintAnalyzer.configure(true);
             }).toThrow();
+
+            expect(fs.readFileSync).toHaveBeenCalled();
         });
     });
 });

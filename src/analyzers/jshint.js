@@ -1,8 +1,8 @@
 'use strict';
 var Analysis = require('../Analysis'),
     Analyzer = require('../Analyzer'),
+    configuration,
     fs = require('fs'),
-    jshintrc,
     jshint = require('jshint');
 
 module.exports = new Analyzer({
@@ -14,7 +14,7 @@ module.exports = new Analyzer({
 function analyze (fileSourceData) {
     var analysis = new Analysis();
 
-    jshint.JSHINT(fileSourceData.text, jshintrc);
+    jshint.JSHINT(fileSourceData.text, configuration);
     
     jshint.JSHINT.errors
         .filter(error => error !== null)
@@ -28,15 +28,15 @@ function analyze (fileSourceData) {
     return analysis;
 }
 
-function configure (configuration) {
-    if (configuration === false) {
+function configure (config) {
+    if (config === false) {
         throw new Error('JSHint configuration has been disabled');
     }
-    else if (configuration === true) {
-        jshintrc = getJshintrc();
+    else if (config === true) {
+        configuration = getJshintrc();
     }
     else {
-        jshintrc = configuration;
+        configuration = config;
     }
 }
 
@@ -48,11 +48,9 @@ function getJshintrc () {
     var jshintrcPath = process.cwd() + '/.jshintrc';
 
     try {
-        jshintrc = JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
+        return JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
     }
     catch (error) {
         throw new Error(`Expected to find JSHint configuration ${jshintrcPath}; saw error ${error.message}`, error);
     }
-
-    return jshintrc;
 }

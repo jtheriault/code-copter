@@ -1,42 +1,23 @@
 'use strict';
 var Analysis = require('../Analysis'),
     Analyzer = require('../Analyzer'),
+    configuration,
     fs = require('fs'),
-    jscsrcPath = process.cwd() + '/.jscsrc',
-    jscsrc,
     Jscs = require('jscs');
 
 module.exports = new Analyzer({
     analyze: analyze,
+    configure: configure,
     name: 'JSCS'
 });
 
-/**
- * Get the object representation of the configuration in .jscsrc in the project
- * root.
- */
-function getJscsrc () {
-    if (!jscsrc) {
-        try {
-            jscsrc = JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
-        }
-        catch (error) {
-            throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error ${error.message}`, error);
-        }
-    }
-
-    return jscsrc;
-}
-
 function analyze (fileSourceData) {
-    var jscs = new Jscs(),
-        config = getJscsrc(),
-        analysis;
-
-    analysis = new Analysis();
+    var analysis = new Analysis(),
+        jscs = new Jscs();
 
     jscs.registerDefaultRules();
-    jscs.configure(config);
+
+    jscs.configure(configuration);
 
     jscs.checkString(fileSourceData.text)
         .getErrorList()
@@ -48,4 +29,31 @@ function analyze (fileSourceData) {
         });
 
     return analysis;
+}
+
+function configure (config) {
+    if (config === false) {
+        throw new Error('JSHint configuration has been disabled');
+    }
+    else if (config === true) {
+        configuration = getJscsrc();
+    }
+    else {
+        configuration = config;
+    }
+}
+
+/**
+ * Get the object representation of the configuration in .jscsrc in the project
+ * root.
+ */
+function getJscsrc () {
+    var jscsrcPath = process.cwd() + '/.jscsrc';
+
+    try {
+        return JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
+    }
+    catch (error) {
+        throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error ${error.message}`, error);
+    }
 }

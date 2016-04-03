@@ -25,7 +25,7 @@ spec to check code quality with code-copter using the "hell-no-world" plugin.
 
 ### code-copter-analyzer-hell-no-world
 This node module implements an analyzer plugin which produces an error if it
-encounters the phrase "Hello world."
+encounters the phrase "Hello world" or a configured regular expression.
 
 It depends on code-copter for the Analysis and Analyzer types, although these
 are not required, to ease implementation.

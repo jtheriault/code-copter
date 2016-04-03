@@ -1,9 +1,11 @@
 'use strict';
 var Analysis = require('code-copter').Analysis,
-    Analyzer = require('code-copter').Analyzer;
+    Analyzer = require('code-copter').Analyzer,
+    matchExpression = /\Whello world\W/i;
 
 module.exports = new Analyzer({
     analyze: analyze,
+    configure: configure,
     name: 'Hell(n)o World!'
 });
 
@@ -28,6 +30,16 @@ function analyze (fileSourceData) {
     return analysis;
 }
 
+function configure (config) {
+    if (config !== true) {
+        if (config.constructor.name !== 'RegExp') {
+            throw new Error('Configuration must either be a match expression or a boolean true for the default.');
+        }
+
+        matchExpression = config;
+    }
+}
+
 /**
  * Determines whether a string contains the case-insentive phrase "Hello world".
  *
@@ -35,5 +47,5 @@ function analyze (fileSourceData) {
  * @returns {Boolean} - True if the text contains "Hello world;" otherwise false.
  */
 function saysHelloWorld(text) {
-    return text.match(/\Whello world\W/i) !== null;
+    return text.match(matchExpression) !== null;
 }

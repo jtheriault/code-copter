@@ -3,7 +3,7 @@ var codeCopter = require('code-copter');
 
 codeCopter.configure({
     analyzers: {
-        'hell-no-world': true,
+        'hell-no-world': /Hello cruel world/,
         jscs: false,
         jshint: false
     }

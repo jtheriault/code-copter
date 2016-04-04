@@ -1,6 +1,6 @@
 'use strict';
-var analyzers = require('./analyzers'),
-    Analyzer = require('./Analyzer');
+var Analyzer = require('./Analyzer'),
+    analyzers = require('./analyzers');
 
 exports.create = create;
 

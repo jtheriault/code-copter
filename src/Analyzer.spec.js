@@ -1,7 +1,12 @@
 'use strict';
 describe('Analyzer type', function describeAnalyzerType () {
     var Analyzer = require('./Analyzer'),
+        analyzer,
         validParameters;
+
+    function instantiateAnalyzer () {
+        analyzer = new Analyzer(validParameters);
+    }
 
     beforeEach(function prepareTestData () {
         validParameters = {
@@ -17,11 +22,7 @@ describe('Analyzer type', function describeAnalyzerType () {
     });
 
     it('should instantiate with required parameters', function constructor () {
-        var analyzer;
-
-        expect(function instantiateAnalyzer () {
-            analyzer = new Analyzer(validParameters);
-        }).not.toThrow();
+        expect(instantiateAnalyzer).not.toThrow();
 
         expect(analyzer).toEqual(jasmine.objectContaining(validParameters));
     });
@@ -34,7 +35,7 @@ describe('Analyzer type', function describeAnalyzerType () {
     });
 
     it('should not allow modification of structure', function shouldBeSealed () {
-        var analyzer = new Analyzer(validParameters);
+        instantiateAnalyzer();
         
         expect(function monkeyPatchAnalyzer () {
             analyzer.isAwesome = true;
@@ -42,34 +43,28 @@ describe('Analyzer type', function describeAnalyzerType () {
     });
 
     it('should require parameters', function constructor () {
-        expect(function instantiateAnalyzer () {
-            new Analyzer();
-        }).toThrow();
+        validParameters = undefined;
+
+        expect(instantiateAnalyzer).toThrow();
     });
 
     it('should require analyze function parameter', function constructor () {
         delete validParameters.analyze;
 
-        expect(function instantiateAnalayzer () {
-            new Analyzer(validParameters);
-        }).toThrow();
+        expect(instantiateAnalyzer).toThrow();
     });
 
     it('should require name parameter', function constructor () {
         delete validParameters.name;
 
-        expect(function instantiateAnalayzer () {
-            new Analyzer(validParameters);
-        }).toThrow();
+        expect(instantiateAnalyzer).toThrow();
     });
 
     describe('default configuration', function describeConfiguration () {
-        var analyzer;
-
         beforeEach(function instantiateDefaultConfiguredAnalyzer () {
             delete validParameters.configure;
 
-            analyzer = new Analyzer(validParameters);
+            instantiateAnalyzer();
         });
 
         it('should not throw an error', function configure () {

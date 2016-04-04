@@ -1,0 +1,12 @@
+{
+  "name": "code-copter-reporter-say",
+  "version": "0.1.0",
+  "description": "An example of an implementation of a reporter plugin which reports errors with TTS.",
+  "main": "index.js",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "code-copter": "file:../../..",
+    "say": "^0.9.0"
+  }
+}

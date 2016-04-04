@@ -1,0 +1,15 @@
+{
+  "name": "code-copter-example-reporter-plugin-usage",
+  "version": "1.0.0",
+  "description": "An example of an implementation of a reporter plugin and a project incorporating it.",
+  "scripts": {
+    "clean": "rm -r node_modules/code-copter*",
+    "posttest": "node scripts/code-copter"
+  },
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "code-copter": "file:../..",
+    "code-copter-reporter-say": "file:code-copter-reporter-say"
+  }
+}

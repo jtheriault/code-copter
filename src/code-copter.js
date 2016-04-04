@@ -34,7 +34,7 @@ function analyzeSource (source) {
         }
     }
 
-    this.reporter(analysis);
+    this.reporter.report(analysis);
 
     return analysis;
 }

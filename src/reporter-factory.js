@@ -1,16 +1,25 @@
 'use strict';
-var reporters = require('./reporters');
+var Reporter = require('./Reporter'),
+    reporters = require('./reporters');
 
 exports.create = create;
 
-function create () {
-    return createPlugin.apply(null, arguments) || 
-        createPackaged.apply(null, arguments) ||
-        createInline.apply(null, arguments);
+function create (spec) {
+    return createPlugin(spec) || 
+        createPackaged(spec) ||
+        createInline(spec);
 }
 
 function createInline (inline) {
-    return typeof inline === 'function' ? inline : null;
+    var reporter = null;
+
+    if (typeof inline === 'function') {
+        reporter = new Reporter({
+            report: inline
+        });
+    }
+
+    return reporter;
 }
 
 function createPackaged (name) {
@@ -20,11 +29,14 @@ function createPackaged (name) {
 function createPlugin (name) {
     var plugin = require('./plugin-factory').create('reporter', name);
 
-    if (plugin && plugin.report) {
-        return plugin;
+    if (plugin) {
+        try {
+            return plugin instanceof Reporter ? plugin : new Reporter(plugin);
+        }
+        catch (ignore) {
+            console.warn(`Module found for "${name}" is not a code-copter reporter plugin`);
+        }
     }
-
-    console.warn(`Module found for "${name}" is not a code-copter reporter plugin`);
 
     return null;
 }

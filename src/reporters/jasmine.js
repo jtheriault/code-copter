@@ -1,6 +1,9 @@
 'use strict';
+var Reporter = require('../Reporter');
 
-module.exports = reportAnalysis;
+module.exports = new Reporter({
+    report: reportAnalysis
+});
 
 function toPassCodeCopterAnalysis() {
     return {

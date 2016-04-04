@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "ISC",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "code-copter": "file:../../.."
   }
 }

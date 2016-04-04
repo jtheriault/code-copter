@@ -2,10 +2,10 @@
 var assert = require('assert');
 
 class Analyzer {
-    /* jscs:disable */
+    /* jscs:disable disallowAnonymousFunctions */
     constructor (parameters) {
         assert(parameters, 'A value for parameters must be provided');
-        assert(parameters.analyze, 'An implementation for analyze must be provided');
+        assert(parameters.analyze, 'An analyze function must be provided');
         assert(parameters.name, 'A name must be provided');
 
         this.analyze = parameters.analyze;

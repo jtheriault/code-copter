@@ -1,8 +1,11 @@
 # 2.0 (hard)
+Report each vs report overall
+* record each and report overall
+* report each and report overall and recognize difference between one analysis and an array of them
+* allow/require each to be async
+Do JSHint and JSCS really require an rc file?
 Update examples
-* reporter plugin is object with methods
 * clear/common output
-* subpackages for greater accuracy
 * etc
 Performance tuning
 What happened to watch:test?
@@ -25,6 +28,7 @@ Revisit main path
 * CQRS style
 * separate steps to be more granular (e.g. separate reporting from analyzing)
 * have a single instance for worker/command handler
+* C-C is sync to support jasmine, but can it be async if passed a callback?
 Infer dependencies better
 * let the factories know about discovery -- hide impls outside main folder
 * the problem with configuration is the confusion of c-c as module and utility
@@ -53,3 +57,4 @@ Stand-alone executable
 ** configuration JSON
 ** config file names
 * Allow analysis of directories (i.e. name, contents)
+* Have some fun with i18n in say example

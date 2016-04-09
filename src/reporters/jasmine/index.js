@@ -1,5 +1,6 @@
 'use strict';
-var Reporter = require('../Reporter');
+var bdd = require('./jasmine'),
+    Reporter = require('../../Reporter');
 
 module.exports = new Reporter({
     report: reportAnalysis
@@ -27,15 +28,15 @@ function toPassCodeCopterAnalysis() {
 }
 
 function reportAnalysis (analysis) {
-    describe(analysis.target, function describeFileQuality () {
-        beforeEach(function addMatchers () {
-            jasmine.addMatchers({
+    bdd.describe(analysis.target, function describeFileQuality () {
+        bdd.beforeEach(function addMatchers () {
+            bdd.addMatchers({
                 toPassCodeCopterAnalysis: toPassCodeCopterAnalysis
             });
         });
 
-        it('should pass code copter analysis', function shouldPassMatchers () {
-            expect(analysis).toPassCodeCopterAnalysis();
+        bdd.it('should pass code copter analysis', function shouldPassMatchers () {
+            bdd.expect(analysis).toPassCodeCopterAnalysis();
         });
     });
 }

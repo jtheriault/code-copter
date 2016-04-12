@@ -2,45 +2,42 @@
 describe('Jasmine reporter', function describeJasmineReporter () {
     var Analysis = require('../../Analysis'),
         bdd = require('./jasmine'),
+        beforeEachTarget,
         describeTarget,
+        matcher,
         targetShouldPass,
         reporter = require('.'),
         testAnalysis;
 
-    beforeEach(function captureCallbacks () {
+    function reportTestAnalysis () {
+        reporter.report(testAnalysis);
+
+        describeTarget();
+        beforeEachTarget();
+        targetShouldPass();
+    }
+
+    beforeEach(function prepareTests () {
         testAnalysis = new Analysis();
 
         spyOn(bdd, 'describe').and.callFake(function captureDescribe (target, callback) { describeTarget = callback; });
+        spyOn(bdd, 'beforeEach').and.callFake(function captureBeforeEach (callback) { beforeEachTarget = callback; });
+        spyOn(bdd, 'addMatchers').and.callFake(function captureMatcher (obj) { matcher = obj.toPassCodeCopterAnalysis(); });
         spyOn(bdd, 'it').and.callFake(function captureIt(message, callback) { targetShouldPass = callback; });
-    });
-
-    it('should report analysis', function report () {
         spyOn(bdd, 'expect').and.returnValue({ 
             toPassCodeCopterAnalysis: jasmine.createSpy('toPassCodeCopterAnalysis') 
         });
+    });
 
-        reporter.report(testAnalysis);
-        describeTarget();
-        targetShouldPass();
+    it('should report analysis', function report () {
+        reportTestAnalysis();
 
         expect(bdd.expect).toHaveBeenCalledWith(testAnalysis);
     });
 
     describe('matcher', function describeMatcher () {
-        var beforeEachTarget,
-            matcher;
-
-        beforeEach(function captureCallbacks () {
-            spyOn(bdd, 'beforeEach').and.callFake(function captureBeforeEach (callback) { beforeEachTarget = callback; });
-            spyOn(bdd, 'addMatchers').and.callFake(function captureMatcher (obj) { matcher = obj.toPassCodeCopterAnalysis(); });
-            spyOn(bdd, 'expect').and.returnValue({ 
-                toPassCodeCopterAnalysis: jasmine.createSpy('toPassCodeCopterAnalysis') 
-            });
-        });
-
         it('should be added before each target is tested', function report () {
-            describeTarget();
-            beforeEachTarget();
+            reportTestAnalysis();
 
             expect(bdd.addMatchers).toHaveBeenCalledWith({ toPassCodeCopterAnalysis: jasmine.any(Function) });
         });
@@ -48,11 +45,7 @@ describe('Jasmine reporter', function describeJasmineReporter () {
         it('should return a passing result for a passing analysis', function compare () {
             var result;
 
-            reporter.report(testAnalysis);
-            describeTarget();
-            beforeEachTarget();
-            targetShouldPass();
-
+            reportTestAnalysis();
             result = matcher.compare(testAnalysis);
 
             expect(result.pass).toBe(true);
@@ -68,11 +61,7 @@ describe('Jasmine reporter', function describeJasmineReporter () {
                 message: testErrorMessage
             });
 
-            reporter.report(testAnalysis);
-            describeTarget();
-            beforeEachTarget();
-            targetShouldPass();
-
+            reportTestAnalysis();
             result = matcher.compare(testAnalysis);
 
             expect(result.pass).toBe(false);

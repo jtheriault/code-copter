@@ -4,6 +4,7 @@ var Analysis = require('./src').Analysis,
     analyzers = require('./src').analyzers,
     codeCopter = require('./src').codeCopter,
     configuration = require('./src').configuration,
+    Report = require('./src').Report,
     Reporter = require('./src').Reporter;
 
 // API
@@ -13,4 +14,5 @@ module.exports.configure = configuration.set;
 // SDK
 module.exports.Analysis = Analysis;
 module.exports.Analyzer = Analyzer;
+module.exports.Report = Report;
 module.exports.Reporter = Reporter;

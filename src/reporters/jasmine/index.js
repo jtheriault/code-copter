@@ -3,7 +3,7 @@ var bdd = require('./jasmine'),
     Reporter = require('../../Reporter');
 
 module.exports = new Reporter({
-    report: reportAnalysis
+    report: reportAnalyses
 });
 
 function toPassCodeCopterAnalysis() {
@@ -25,6 +25,10 @@ function toPassCodeCopterAnalysis() {
             return result;
         }
     };
+}
+
+function reportAnalyses (report) {
+    report.analyses.forEach(analysis => reportAnalysis(analysis));
 }
 
 function reportAnalysis (analysis) {

@@ -6,11 +6,13 @@ describe('Jasmine reporter', function describeJasmineReporter () {
         describeTarget,
         matcher,
         targetShouldPass,
+        Report = require('../../Report'),
         reporter = require('.'),
-        testAnalysis;
+        testAnalysis,
+        testReport;
 
-    function reportTestAnalysis () {
-        reporter.report(testAnalysis);
+    function reportTestReport () {
+        reporter.report(testReport);
 
         describeTarget();
         beforeEachTarget();
@@ -19,6 +21,9 @@ describe('Jasmine reporter', function describeJasmineReporter () {
 
     beforeEach(function prepareTests () {
         testAnalysis = new Analysis();
+        testReport = new Report();
+        
+        testReport.addAnalysis(testAnalysis);
 
         spyOn(bdd, 'describe').and.callFake(function captureDescribe (target, callback) { describeTarget = callback; });
         spyOn(bdd, 'beforeEach').and.callFake(function captureBeforeEach (callback) { beforeEachTarget = callback; });
@@ -29,15 +34,19 @@ describe('Jasmine reporter', function describeJasmineReporter () {
         });
     });
 
+    it('should require a report object?');
+
     it('should report analysis', function report () {
-        reportTestAnalysis();
+        reportTestReport();
 
         expect(bdd.expect).toHaveBeenCalledWith(testAnalysis);
     });
 
+    it('should report multiple analyses');
+
     describe('matcher', function describeMatcher () {
         it('should be added before each target is tested', function report () {
-            reportTestAnalysis();
+            reportTestReport();
 
             expect(bdd.addMatchers).toHaveBeenCalledWith({ toPassCodeCopterAnalysis: jasmine.any(Function) });
         });
@@ -45,7 +54,7 @@ describe('Jasmine reporter', function describeJasmineReporter () {
         it('should return a passing result for a passing analysis', function compare () {
             var result;
 
-            reportTestAnalysis();
+            reportTestReport();
             result = matcher.compare(testAnalysis);
 
             expect(result.pass).toBe(true);
@@ -61,7 +70,7 @@ describe('Jasmine reporter', function describeJasmineReporter () {
                 message: testErrorMessage
             });
 
-            reportTestAnalysis();
+            reportTestReport();
             result = matcher.compare(testAnalysis);
 
             expect(result.pass).toBe(false);

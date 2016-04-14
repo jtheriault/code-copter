@@ -4,13 +4,10 @@ var sourceRepositoryFactory = require('./source-repository-factory'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration'),
     Analysis = require('./Analysis'),
-    FileSourceData = require('./FileSourceData');
+    FileSourceData = require('./FileSourceData'),
+    Report = require('./Report');
 
 module.exports = main;
-
-function analyzeSourceList (context) {
-    context.sourceList.forEach(analyzeSource.bind(context));
-}
 
 function analyzeSource (source) {
     /* jshint validthis:true */
@@ -34,9 +31,17 @@ function analyzeSource (source) {
         }
     }
 
-    this.reporter.report(analysis);
-
     return analysis;
+}
+
+function analyzeSourceList (context) {
+    var report = new Report();
+
+    for (let source of context.sourceList) {
+        report.addAnalysis(analyzeSource.call(context, source));
+    }
+
+    return report;
 }
 
 function loadAnalyzers (context) {
@@ -86,6 +91,11 @@ function loadSourceRepository (context) {
     return context;
 }
 
+function report (analysisReport) {
+    /* jshint validthis:true */
+    this.reporter.report(analysisReport);
+}
+
 function main () {
     var context,
         tasks;
@@ -99,8 +109,9 @@ function main () {
             loadReporter,
             loadAnalyzers,
             loadSourceList,
-            analyzeSourceList
-        ].reduce((val, task) => task(val), context);
+            analyzeSourceList,
+            report
+        ].reduce((val, task) => task.bind(context)(val), context);
     }
     catch (error) {
         console.error('Could not run code copter analysis due to error', error);

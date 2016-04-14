@@ -1,8 +1,4 @@
 # 2.0 (hard)
-Report each vs report overall
-* record each and report overall
-* report each and report overall and recognize difference between one analysis and an array of them
-* allow/require each to be async
 Do JSHint and JSCS really require an rc file?
 Update examples
 * clear/common output
@@ -41,6 +37,8 @@ githubio pages
 
 # 2.1
 getLines as stream?
+Report ìndividual analyses?
+* allow/require each to be async
 
 # 2.x
 Stand-alone executable

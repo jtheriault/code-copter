@@ -1,6 +1,5 @@
 'use strict';
-var Reporter = require('./Reporter'),
-    reporters = require('./reporters');
+var Reporter = require('./Reporter');
 
 exports.create = create;
 
@@ -23,6 +22,8 @@ function createInline (inline) {
 }
 
 function createPackaged (name) {
+    var reporters = require('./reporters');
+
     return reporters[name] || null;
 }
 

@@ -1,15 +1,12 @@
 # 2.0 (hard)
 Do JSHint and JSCS really require an rc file?
-Update examples
-* clear/common output
-* etc
 Performance tuning
 What happened to watch:test?
+README
 Unit tests of everything
 Remove skipped tests
-README
-Upgrade dependencies
 Set code coverage limit: 100%
+Upgrade dependencies
 Put env vars in package.json config
 
 # 2.0 (soft)

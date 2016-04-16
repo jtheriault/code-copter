@@ -6,7 +6,11 @@ fi
 
 for spec in $(ls examples/*.spec.js)
 do 
+    echo "Running example: $spec"
+    echo "===================="
     JASMINE_CONFIG_PATH=jasmine.json jasmine $spec
+    echo "===================="
+    read -p "Press enter to continue"
 done
 
 exit 0

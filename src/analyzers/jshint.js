@@ -51,6 +51,7 @@ function getJshintrc () {
         return JSON.parse(fs.readFileSync(jshintrcPath, 'utf8'));
     }
     catch (error) {
-        throw new Error(`Expected to find JSHint configuration ${jshintrcPath}; saw error ${error.message}`, error);
+        console.warn(`Expected to find JSHint configuration ${jshintrcPath}. Using default JSHint configuration`);
+        return undefined;
     }
 }

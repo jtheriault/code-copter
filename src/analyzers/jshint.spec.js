@@ -62,14 +62,16 @@ describe('JSHint analyzer', function describeJshintAnalyzer () {
             expect(jshint.JSHINT).toHaveBeenCalledWith(undefined, testConfiguration);
         });
 
-        it('should error if no configuration file is found', function configure () {
+        it('should use default configuration if no file is found', function configure () {
+            spyOn(console, 'warn');
+
             fs.readFileSync.and.throwError();
             
-            expect(function callConfigure () {
-                jshintAnalyzer.configure(true);
-            }).toThrow();
+            jshintAnalyzer.configure(true);
+            jshintAnalyzer.analyze({});
 
-            expect(fs.readFileSync).toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalledWith(jasmine.stringMatching(/.jshintrc/));
+            expect(jshint.JSHINT).toHaveBeenCalledWith(undefined, undefined);
         });
     });
 });

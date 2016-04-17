@@ -67,14 +67,16 @@ describe('JSCS analyzer', function describeJscsAnalyzer () {
             expect(Jscs.prototype.configure).toHaveBeenCalledWith(testConfiguration);
         });
 
-        it('should error for no configuration', function configure () {
+        it('should use default configuration if no file is found', function configure () {
+            spyOn(console, 'warn');
+
             fs.readFileSync.and.throwError();
             
-            expect(function callConfigure () {
-                jscsAnalyzer.configure(true);
-            }).toThrow();
+            jscsAnalyzer.configure(true);
+            jscsAnalyzer.analyze({});
 
-            expect(fs.readFileSync).toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalledWith(jasmine.stringMatching(/.jscsrc/));
+            expect(Jscs.prototype.configure).not.toHaveBeenCalled();
         });
     });
 });

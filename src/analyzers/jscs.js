@@ -17,7 +17,9 @@ function analyze (fileSourceData) {
 
     jscs.registerDefaultRules();
 
-    jscs.configure(configuration);
+    if (configuration) {
+        jscs.configure(configuration);
+    }
 
     jscs.checkString(fileSourceData.text)
         .getErrorList()
@@ -33,7 +35,7 @@ function analyze (fileSourceData) {
 
 function configure (config) {
     if (config === false) {
-        throw new Error('JSHint configuration has been disabled');
+        throw new Error('JSCS configuration has been disabled');
     }
     else if (config === true) {
         configuration = getJscsrc();
@@ -54,6 +56,7 @@ function getJscsrc () {
         return JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
     }
     catch (error) {
-        throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error ${error.message}`, error);
+        console.warn(`Expected to find JSCS configuration ${jscsrcPath}. Using default JSCS configuration`);
+        return null;
     }
 }

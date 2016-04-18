@@ -54,6 +54,6 @@ function getJscsrc () {
         return JSON.parse(fs.readFileSync(jscsrcPath, 'utf8'));
     }
     catch (error) {
-        throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error ${error.message}`, error);
+        throw new Error(`Expected to find JSCS configuration ${jscsrcPath}; saw error "${error.message}". Cannot run JSCS analysis.`, error);
     }
 }

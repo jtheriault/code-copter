@@ -3,6 +3,7 @@
   "version": "1.5.1",
   "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
+    "clean": "rm -r coverage/ node_modules",
     "examples": "scripts/run-examples",
     "ls:todo": "egrep -nr '\\W+TODO\\W+.*$' src/",
     "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",
@@ -25,8 +26,8 @@
     "url": "https://github.com/jtheriault/code-copter/issues"
   },
   "dependencies": {
+    "code-copter-reporter-jasmine": "^1.0.0",
     "extend": "^3.0.0",
-    "jasmine": "~2.3.2",
     "jscs": "~2.2.1",
     "jshint": "~2.8.0",
     "parent-require": "^1.0.0",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "istanbul": "^0.3.22",
+    "jasmine": "~2.3.2",
     "nodemon": "~1.7.1",
     "proxyquire": "^1.7.3"
   }

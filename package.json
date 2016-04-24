@@ -6,7 +6,7 @@
     "clean": "rm -r coverage/ node_modules",
     "examples": "scripts/run-examples",
     "ls:todo": "egrep -nr '\\W+TODO\\W+.*$' src/",
-    "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover `which jasmine`",
+    "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine",
     "posttest": "istanbul check-coverage",
     "watch:test": "nodemon -i coverage -x npm test"
   },

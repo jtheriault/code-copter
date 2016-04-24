@@ -1,4 +1,0 @@
-Authors ordered by first contribution
-A list of current team members is available at http://jqueryui.com/about
-
-Joe Theriault <joseph@yankoismedia.com>

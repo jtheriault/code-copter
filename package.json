@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "code-copter-reporter-jasmine": "^1.0.0",
+    "code-copter-sdk": "^1.0.0",
     "extend": "^3.0.0",
     "jscs": "~2.2.1",
     "jshint": "~2.8.0",

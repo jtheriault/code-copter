@@ -1,5 +1,5 @@
 'use strict';
-var Analysis = require('../Analysis'),
+var Analysis = require('code-copter-sdk').Analysis,
     Analyzer = require('../Analyzer'),
     configuration,
     fs = require('fs'),

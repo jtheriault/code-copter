@@ -3,9 +3,9 @@ var sourceRepositoryFactory = require('./source-repository-factory'),
     reporterFactory = require('./reporter-factory'),
     analyzerFactory = require('./analyzer-factory'),
     configuration = require('./configuration'),
-    Analysis = require('./Analysis'),
+    Analysis = require('code-copter-sdk').Analysis,
     FileSourceData = require('./FileSourceData'),
-    Report = require('./Report');
+    Report = require('code-copter-sdk').Report;
 
 module.exports = main;
 

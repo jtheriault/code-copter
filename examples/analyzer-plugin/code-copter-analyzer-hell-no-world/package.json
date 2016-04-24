@@ -6,6 +6,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "code-copter": "file:../../.."
+    "code-copter": "file:../../..",
+    "code-copter-sdk": "^1.0.0"
   }
 }

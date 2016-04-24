@@ -4,7 +4,7 @@ var proxyquire = require('proxyquire');
 describe('Reporter factory', function describeReporterFactory () {
     var factory,
         fakeReporters,
-        Reporter = require('./Reporter');
+        Reporter = require('code-copter-sdk').Reporter;
 
     beforeEach(function prepareDepencencies () {
         fakeReporters = {};

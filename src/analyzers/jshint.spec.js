@@ -1,7 +1,7 @@
 'use strict';
 describe('JSHint analyzer', function describeJshintAnalyzer () {
     var Analyzer = require('../Analyzer'),
-        Analysis = require('../Analysis'),
+        Analysis = require('code-copter-sdk').Analysis,
         FileSourceData = require('../FileSourceData'),
         fs = require('fs'),
         jshint = require('jshint'),

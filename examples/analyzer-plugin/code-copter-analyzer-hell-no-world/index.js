@@ -1,5 +1,5 @@
 'use strict';
-var Analysis = require('code-copter').Analysis,
+var Analysis = require('code-copter-sdk').Analysis,
     Analyzer = require('code-copter').Analyzer,
     matchExpression = /\Whello world\W/i;
 

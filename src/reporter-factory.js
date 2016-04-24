@@ -1,5 +1,5 @@
 'use strict';
-var Reporter = require('./Reporter');
+var Reporter = require('code-copter-sdk').Reporter;
 
 exports.create = create;
 

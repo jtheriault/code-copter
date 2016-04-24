@@ -1,7 +1,7 @@
 'use strict';
 describe('JSCS analyzer', function describeJscsAnalyzer () {
     var Analyzer = require('../Analyzer'),
-        Analysis = require('../Analysis'),
+        Analysis = require('code-copter-sdk').Analysis,
         FileSourceData = require('../FileSourceData'),
         fs = require('fs'),
         Jscs = require('jscs'),

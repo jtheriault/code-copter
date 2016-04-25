@@ -5,7 +5,7 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
     var factory,
         fakeAnalyzers,
         pluginFactory = require('./plugin-factory'),
-        Analyzer = require('./Analyzer');
+        Analyzer = require('code-copter-sdk').Analyzer;
 
     beforeEach(function prepareDepencencies () {
         fakeAnalyzers = {};

@@ -26,11 +26,11 @@
     "url": "https://github.com/jtheriault/code-copter/issues"
   },
   "dependencies": {
+    "code-copter-analyzer-jshint": "^1.0.0",
     "code-copter-reporter-jasmine": "^1.0.0",
-    "code-copter-sdk": "^1.0.0",
+    "code-copter-sdk": "^1.1.0",
     "extend": "^3.0.0",
     "jscs": "~2.2.1",
-    "jshint": "~2.8.0",
     "parent-require": "^1.0.0",
     "walk": "~2.3.9"
   },

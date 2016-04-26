@@ -1,6 +1,6 @@
 'use strict';
 var analyzers = {
-    jscs: require('./jscs'),
+    jscs: require('code-copter-analyzer-jscs'),
     jshint: require('code-copter-analyzer-jshint')
 };
 

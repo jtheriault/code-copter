@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "code-copter-analyzer-jshint": "^1.0.0",
+    "code-copter-analyzer-jscs": "^1.0.0",
     "code-copter-reporter-jasmine": "^1.0.0",
     "code-copter-sdk": "^1.1.0",
     "extend": "^3.0.0",
-    "jscs": "~2.2.1",
     "parent-require": "^1.0.0",
     "walk": "~2.3.9"
   },

@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "code-copter": "file:../../..",
-    "code-copter-sdk": "^1.0.0"
+    "code-copter-sdk": "^1.2.3"
   }
 }

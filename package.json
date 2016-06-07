@@ -3,12 +3,16 @@
   "version": "1.5.1",
   "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
-    "clean": "rm -r coverage/ node_modules",
+    "clean": "rm -rf coverage/ node_modules npm-shrinkwrap.json",
     "examples": "scripts/run-examples",
-    "ls:todo": "egrep -nr '\\W+TODO\\W+.*$' src/",
-    "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine",
+    "ls:todo": "egrep -nr '\\W+TODO\\W+.*$' src/ || echo 'Nothing to do.'",
+    "prepublish": "(in-publish && npm shrinkwrap) || (! in-publish && echo 'Skipping prepublish step')",
+    "preshrinkwrap": "rm -f npm-shrinkwrap.json",
+    "preversion": "npm test",
     "posttest": "istanbul check-coverage",
-    "watch:test": "nodemon -i coverage -x npm test"
+    "postversion": "npm publish",
+    "test": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover --handle-sigint jasmine",
+    "watch:test": "nodemon -w src -x npm test"
   },
   "repository": {
     "type": "git",
@@ -35,9 +39,11 @@
     "walk": "~2.3.9"
   },
   "devDependencies": {
-    "istanbul": "^0.3.22",
-    "jasmine": "~2.3.2",
-    "nodemon": "~1.7.1",
-    "proxyquire": "^1.7.3"
+    "in-publish": "^2.0.0",
+    "istanbul": "^0.4.3",
+    "jasmine": "^2.4.1",
+    "nodemon": "^1.9.1",
+    "proxyquire": "^1.7.4",
+    "jsdoc-to-markdown": "~1.3.6"
   }
 }

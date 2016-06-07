@@ -1,15 +1,17 @@
 # 2.0 (hard)
-Do JSHint and JSCS really require an rc file?
-Performance tuning
-What happened to watch:test?
+Separate analyzers and reporter as plugins
 README
 Unit tests of everything
-Remove skipped tests
 Set code coverage limit: 100%
 Upgrade dependencies
-Put env vars in package.json config
+dedupe & shrinkwrap -- build/release/publish/version script?
+Remove skipped tests
 
 # 2.0 (soft)
+Put env vars in package.json config
+Performance tuning
+What happened to watch:test?
+Logging (we're chattier than necessary, and don't grab attention when we should)
 Fail if no analyzers are configured/loaded (can just be reported by the reporter)
 Fail if no reporter is configured/loaded (have to throw an exception?)
 order errors by line number

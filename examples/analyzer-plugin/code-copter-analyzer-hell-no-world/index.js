@@ -1,6 +1,6 @@
 'use strict';
 var Analysis = require('code-copter-sdk').Analysis,
-    Analyzer = require('code-copter').Analyzer,
+    Analyzer = require('code-copter-sdk').Analyzer,
     matchExpression = /\Whello world\W/i;
 
 module.exports = new Analyzer({

@@ -4,6 +4,20 @@ if [ ! -f $JASMINE_CONFIG_PATH ]; then
     exit 1
 fi
 
+run_plugin() {
+    example=$1
+
+    echo "Running example plugin: $example"
+    echo "===================="
+    pushd examples/$example-plugin
+    npm install
+    npm test
+    popd
+    echo "===================="
+    read -p "Press enter to continue"
+    echo
+}
+
 for spec in $(ls examples/*.spec.js)
 do 
     echo "Running example: $spec"
@@ -11,6 +25,15 @@ do
     JASMINE_CONFIG_PATH=jasmine.json jasmine $spec
     echo "===================="
     read -p "Press enter to continue"
+    echo
 done
+
+read -p "Run plugin examples (requires npm install) (y/n)? " -n 1 -t 10 RUN_PLUGINS
+echo
+if [[ $RUN_PLUGINS = [yY] ]]; then
+    run_plugin analyzer
+
+    run_plugin reporter
+fi
 
 exit 0

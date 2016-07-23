@@ -1,6 +1,11 @@
 'use strict';
 var codeCopter = require('../');
 
+/**
+ * A pretty harsh analyzer that passes NO files for the reason that "it sucks" starting on line 1.
+ *
+ * @returns {Object} An object consistent with a code-copter Analysis object bearing the inevitable message that the code in the analyzed file sucks.
+ */
 function itSucks () {
     return {
         errors: [{
@@ -17,4 +22,4 @@ codeCopter.configure({
     }
 });
 
-describe('Inline Analayzer Example', codeCopter);
+describe('Inline Analyzer Example', codeCopter);

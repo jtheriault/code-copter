@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An example of an implementation of an analyzer plugin and a project incorporating it.",
   "scripts": {
-    "clean": "rm -r node_modules/code-copter*",
+    "clean": "rm -rf node_modules",
     "test": "jasmine"
   },
   "license": "ISC",

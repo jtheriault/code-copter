@@ -1,6 +1,13 @@
 'use strict';
 var codeCopter = require('../');
 
+/**
+ * A pretty harsh reporter. 
+ * It tells you in no uncertain terms that code that doesn't pass analysis could
+ * use improvement (and isn't especially kind about passing code either).
+ *
+ * @param {Analysis|Object} analysis - A code-copter analysis (see code-copter-sdk)
+ */
 function itSucks (analysis) {
     if (analysis.pass) {
         console.log(`${analysis.target} looks good. Wanna cookie or something? This is what's supposed to happen!`);

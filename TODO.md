@@ -1,57 +1,36 @@
 # 2.0 (hard)
-Separate analyzers and reporter as plugins
-README
-Unit tests of everything
-Set code coverage limit: 100%
-Upgrade dependencies
-dedupe & shrinkwrap -- build/release/publish/version script?
 Remove skipped tests
 
-# 2.0 (soft)
-Put env vars in package.json config
-Performance tuning
-What happened to watch:test?
-Logging (we're chattier than necessary, and don't grab attention when we should)
-Fail if no analyzers are configured/loaded (can just be reported by the reporter)
-Fail if no reporter is configured/loaded (have to throw an exception?)
-order errors by line number
-Handle errors when walking
-Instantiate default JSCS checker once
-DRY out reporter and analyzer factories
-Integration test from inline analyzer to inline reporter
-Revisit main path 
-* CQRS style
-* separate steps to be more granular (e.g. separate reporting from analyzing)
-* have a single instance for worker/command handler
-* C-C is sync to support jasmine, but can it be async if passed a callback?
-Infer dependencies better
-* let the factories know about discovery -- hide impls outside main folder
-* the problem with configuration is the confusion of c-c as module and utility
-* most configuration is "which," some will be how and needs to get stored with the dependency instance  
-jsdocs?
-
-# Roadmap
-## Post 2.0
-githubio pages
-
-# 2.1
-getLines as stream?
-Report ìndividual analyses?
-* allow/require each to be async
-
-# 2.x
+# Wish List
+Documentation
+* Update README
+* David badge
+* Current published version
+* Number of downloads
+* Code coverage
+Logging
+* Trace with timestampes to allow performance tuning
+* Configure logging verbosity
+* Log important events
+* Squelch some of the noise that is leaking through right now
+Testing
+* Increase code coverage
+* Integration test from inline analyzer to inline reporter
+Build
+* Publish from Travis
+Error-handling
+* Fail if no analyzers are configured/loaded (can just be reported by the reporter)
+* Fail if no reporter is configured/loaded (have to throw an exception?)
+* Handle errors when walking
+Maintenance
+* Update node dependencies
+* Upgrade to current node LTS
+Refactor
+* Put env vars in package.json config
+* DRY out reporter and analyzer factories
+* Break up main execution code
+* Enable async execution if reporter and analyzers allow
+* Detect analyzers
+* Detect reporter
 Stand-alone executable
-
-## Wish list
-* detect analyzers
-* detect reporter
-* create logger
-* working folder
-** parent-root
-** configure
-* configure logger
-* configure analzyers
-** configuration JSON
-** config file names
-* Allow analysis of directories (i.e. name, contents)
-* Have some fun with i18n in say example
+Allow analysis of directories (i.e. name, contents)

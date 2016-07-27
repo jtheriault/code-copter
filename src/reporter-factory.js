@@ -4,9 +4,15 @@ var Reporter = require('code-copter-sdk').Reporter;
 exports.create = create;
 
 function create (spec) {
-    return createPlugin(spec) || 
-        createPackaged(spec) ||
-        createInline(spec);
+    var reporter;
+
+    if (spec !== false) {
+        reporter =  createInline(spec) ||
+            createPlugin(spec) || 
+            createPackaged(spec);
+    }
+
+    return reporter;
 }
 
 function createInline (inline) {

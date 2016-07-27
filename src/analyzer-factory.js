@@ -7,9 +7,11 @@ exports.create = create;
 function create (name, config) {
     var analyzer;
     
-    analyzer = createPlugin(name) ||
-        createPackaged(name, config) || 
-        createInline(name, config);
+    if (config !== false) {
+        analyzer = createInline(name, config) ||
+            createPlugin(name) ||
+            createPackaged(name, config);
+    }
 
     try {
         if (analyzer) {

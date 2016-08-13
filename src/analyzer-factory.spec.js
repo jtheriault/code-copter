@@ -121,7 +121,7 @@ describe('Analyzer factory', function describeAnalyzerFactory () {
 
             result = factory.create(testAnalyzerName, true);
 
-            expect(result).toEqual(null);
+            expect(result).toBeFalsy();
         });
 
         it('should configure analyzer', function create () {

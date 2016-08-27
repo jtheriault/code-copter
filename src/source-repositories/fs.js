@@ -7,7 +7,7 @@ class FileSystemSourceRepository {
     // Awaiting resolution of https://github.com/jscs-dev/node-jscs/issues/1890
     // jscs:disable disallowAnonymousFunctions
     constructor (configuration) {
-        this.exclude = configuration.exclude;
+        this.exclude = configuration ? configuration.exclude : [];
         this.include = ['.js'];
         this.sources = null;
     }

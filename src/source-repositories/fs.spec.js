@@ -18,7 +18,7 @@ describe('File system source repository', function describeFsSourceRepository ()
         mockNext = jasmine.createSpy('next');
         
         spyOn(walk, 'walkSync').and.callFake(function fakeWalk (path, options) {
-            for(let source of testSources) {
+            for (let source of testSources) {
                 options.listeners.file(source.directory, { name: source.filename }, mockNext);
             }
         });
@@ -44,6 +44,7 @@ describe('File system source repository', function describeFsSourceRepository ()
         repository = new Repository(testConfiguration);
 
         expect(repository.exclude).toEqual(testConfiguration.exclude);
+
         // TODO: expect non array to fail
     });
 

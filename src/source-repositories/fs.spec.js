@@ -1,5 +1,6 @@
 'use strict';
-var path = require('path'),
+var fs = require('fs'),
+    path = require('path'),
     walk = require('walk');
 
 describe('File system source repository', function describeFsSourceRepository () {
@@ -44,8 +45,18 @@ describe('File system source repository', function describeFsSourceRepository ()
         repository = new Repository(testConfiguration);
 
         expect(repository.exclude).toEqual(testConfiguration.exclude);
+    });
 
-        // TODO: expect non array to fail
+    it('should fail if exclude is not an array', function constructor () {
+        var testConfiguration;
+
+        testConfiguration = {
+            exclude: 'it\'s bad!'
+        };
+
+        expect(function createRepository () {
+            new Repository(testConfiguration);
+        }).toThrow();
     });
 
     it('should look for all valid sources', function getAll () {
@@ -77,11 +88,36 @@ describe('File system source repository', function describeFsSourceRepository ()
         expect(result[0].location).toEqual(fakeLocation);
     });
 
-    xit('should read files when getting source lines', function getLines () {
-        fail('untested');
+    it('should read files when getting source lines', function getLines () {
+        var mockLines,
+            repository,
+            result,
+            testLocation;
+
+        mockLines = 'file contents';
+        testLocation = testSourceValid.filename;
+
+        spyOn(fs, 'readFileSync').and.returnValue(mockLines);
+
+        repository = new Repository({});
+        result = repository.getAll();
+
+        expect(result[0].getLines()).toEqual(mockLines);
+        expect(fs.readFileSync).toHaveBeenCalledWith(jasmine.stringMatching(testLocation), 'utf8');
     });
 
-    xit('should ignore non-js files', function getAll () {
-        fail('untested');
+    it('should ignore non-js files', function getAll () {
+        var repository,
+            result;
+
+        testSources.push({
+            directory: testSourceValid.directory,
+            filename: 'perfectly-safe-script.sh'
+        });
+
+        repository = new Repository();
+        result = repository.getAll();
+
+        expect(result.some(r => r.location.match(/.sh$/))).toBeFalsy();
     });
 });

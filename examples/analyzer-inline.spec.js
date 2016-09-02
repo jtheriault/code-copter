@@ -18,10 +18,8 @@ function itSucks (fileSourceData) {
     }
 
     return {
-        // Too noisy to display every sucky line.
+        // Too noisy to set ```errors: errors```
         // It all sucks, so just say the sucking starts with the first one
-        //
-        //errors: errors,
         errors: [{
             line: errors.shift().line,
             message: 'It sucks. Starting here.'

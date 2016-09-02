@@ -8,15 +8,22 @@ var codeCopter = require('../');
  * @returns {Object} An object consistent with a code-copter Analysis object bearing the inevitable message that the code in the analyzed file sucks.
  */
 function itSucks (fileSourceData) {
-    // OPTIMIZATION: Skip analysis loop and just tell them their code sucks.
-    //
-    //for (let sample of fileSourceData) {
-    //  // TODO: Test sample.text to see if it sucks, add error message for sample.line
-    //}
+    var errors = [];
+
+    for (let sample of fileSourceData) {
+        errors.push({
+            line: sample.line,
+            message: 'This code sucks: ' + sample.text
+        });
+    }
 
     return {
+        // Too noisy to display every sucky line.
+        // It all sucks, so just say the sucking starts with the first one
+        //
+        //errors: errors,
         errors: [{
-            line: 1,
+            line: errors.shift().line,
             message: 'It sucks. Starting here.'
         }],
         pass: false

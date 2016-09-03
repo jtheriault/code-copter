@@ -4,13 +4,10 @@ Remove skipped tests
 # Wish List
 Documentation
 * Update README
-* David badge
-* Current published version
-* Number of downloads
 * Code coverage
 
 Logging
-* Trace with timestampes to allow performance tuning
+* Trace with timestamps to allow performance tuning
 * Configure logging verbosity
 * Log important events
 * Squelch some of the noise that is leaking through right now

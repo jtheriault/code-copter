@@ -1,9 +1,4 @@
-# 2.0 (hard)
-Remove skipped tests
-
-# Wish List
 Documentation
-* Update README
 * Code coverage
 
 Logging
@@ -29,6 +24,7 @@ Maintenance
 * Upgrade to current node LTS
 
 Refactor
+* Break up configuration.js into a Configuration class and a default instance
 * Put env vars in package.json config
 * DRY out reporter and analyzer factories
 * Break up main execution code

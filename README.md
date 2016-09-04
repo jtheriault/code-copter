@@ -102,9 +102,11 @@ This is the core project, and the aim is to keep as much analyzing, reporting
 (and eventually source-loading) specifics out and focus on the engine that ties
 them all together.
 
-* check the issues, file it
-* comment on the issue
-* pull request in a topic branch
+If there is an improvement you would like to make, or seen made, please:
+
+1. check the [existing issues](https://github.com/jtheriault/code-copter/issues), and file one if you don't find it
+1. if there is some activity you would like to see on an issue, whether to endorse it or claim it, please leave a comment
+1. if you've addressed an issue, submit a pull request from a topic branch
 
 ### Plugins
 

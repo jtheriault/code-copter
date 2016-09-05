@@ -61,7 +61,7 @@ To integrate an analyzer plugin with Code-Copter, install it as a dependency of 
 
     npm install --save-dev code-copter-analyzer-example
 
-and then name, excluding the prefeix, when configuring Code-Copter:
+and then enable it by name, excluding the prefix, when configuring Code-Copter:
 
     codeCopter.configure({
         analyzers: {
@@ -81,7 +81,7 @@ To integrate a reporter plugin with Code-Copter, install it as a dependency of y
 
     npm install --save-dev code-copter-reporter-example
 
-and then name, excluding the prefeix, when configuring Code-Copter:
+and then enable it by name, excluding the prefix, when configuring Code-Copter:
 
     codeCopter.configure({
         reporter: 'example'

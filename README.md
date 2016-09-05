@@ -45,7 +45,7 @@ passing it to the describe function:
 
 Objects configuring the individual analyzer (e.g. the contents of .jscsrc) as
 well as a toggling boolean can be passed.  See the section on 
-[Configuration](#Configuration) for more details.
+[Configuration](#configuration) for more details.
 
 **Relevant examples**:
 
@@ -150,6 +150,38 @@ Finally you have to configure Code-Copter to use your custom analyzer:
 * [analyzer-inline](examples/analyzer-inline.spec.js) - Providing a function to include in analysis and reporting
 
 ### Defining a custom reporter
+
+Similar to a custom analyzer, defining a custom reporter is as simple as writing a single function.
+
+An reporter function takes a [Report](https://github.com/jtheriault/code-copter-sdk#report) object which 
+has two important properties:
+
+* *pass* - a boolean for whether the entire codebase passed or not
+* *analyses* - an array of [Analysis](https://github.com/jtheriault/code-copter-sdk#analysis) objects for each file
+
+
+    function consoleLogCounts (report) {
+        if (report.pass) {
+            console.log('Everything passed');
+        }
+        else {
+            // ...
+        }
+    }
+
+each *Analysis* can then be iterated over to report specific errors for each non-passing file:
+
+    for (let analysis of report.analyses) {
+        if (!analysis.pass) {
+            console.log(`${analysis.target} has ${analysis.errors.length} errors`);
+        }
+    }
+
+As with analyzers, you have to configure Code-Copter to use your custom reporter:
+
+    codeCopter.configure({
+        reporter: consoleLogCounts
+    });
 
 **Relevant examples**:
 

@@ -187,7 +187,17 @@ As with analyzers, you have to configure Code-Copter to use your custom reporter
 
 * [reporter-inline](examples/reporter-inline.spec.js) - Providing a function to handle reporting instead
 
-### Writing an analyzer plugin
+### Writing an analyzer 
+
+An analyzer plugin is a node module which exports an [Analyzer](https://github.com/jtheriault/code-copter-sdk#Analyzer)-conformant object which has three
+properties:
+
+* *analyze* - an analyze function as described in the custom analyzer example above
+* *configure* - a function to handle the analyzer's value given when configuring Code-Copter (e.g. true/false, a custom object). If this function throws an exception, Code-Copter will consider the analyzer disabled and not call it at analyze-time.
+* *name* - The name to show with any errors it finds when reporting
+
+It's preferred that the name of your plugin be prefixed with code-copter-analyzer to make it easy to identify, 
+but it is not required.
 
 **Relevant examples**:
 

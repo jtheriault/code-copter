@@ -10,7 +10,7 @@ Code-Copter is a pluggable framework for analyzing code and reporting problems.
 
 Out of the box this allows you to **run JSHint and JSCS in a single pass and report the results through a jasmine test suite**.
 
-More powerfully it allows you to apply custom rules through [plugins](https://npmjs.com/search?q=code-copter-analyzer) or analyzers you supply in-line within your project.
+More powerfully it allows you to customize rules and reporting through functions or [plugins](https://npmjs.com/search?q=code-copter-analyzer).
 
 ## Usage
 Everything described here can be seen in action within the examples folder. 

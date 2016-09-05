@@ -187,7 +187,7 @@ As with analyzers, you have to configure Code-Copter to use your custom reporter
 
 * [reporter-inline](examples/reporter-inline.spec.js) - Providing a function to handle reporting instead
 
-### Writing an analyzer 
+### Writing an analyzer plugin
 
 An analyzer plugin is a node module which exports an [Analyzer](https://github.com/jtheriault/code-copter-sdk#Analyzer)-conformant object which has three
 properties:

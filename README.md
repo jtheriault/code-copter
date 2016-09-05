@@ -91,7 +91,7 @@ How Code-Copter is run then depends on the reporter. For example, the default Ja
 expects Jasmine to manage executing the tests, so Code-Copter is passed as a callback to a 
 Jasmine describe function. 
 
-However a reporter may be invoked by Code-Copter directly. In this case, you would simply call
+However a reporter may be invoked by Code-Copter directly. In cases like that, you would simply call
 Code-Copter as a function:
 
     codeCopter();
@@ -101,6 +101,49 @@ Code-Copter as a function:
 * [reporter-plugin demo](examples/reporter-plugin/scripts/code-copter.js) - Script in a demo project configuring code-copter to use a custom reporter plugin
 
 ### Defining a custom analyzer
+
+A defining a custom analyzer is as simple as writing a single function.
+
+An analyzer function takes a [FileSourceData](https://github.com/jtheriault/code-copter-sdk#filesourcedata) object which 
+can be iterated over to get samples of each line with their text and line number:
+
+    function noTodo (fileSourceData) {
+        var errors = [];
+        
+        for (let sample of fileSourceData) {
+            let line = sample.line,
+                text = sample.text;
+            
+            // ...
+        }
+    }
+
+with this information, you can perform whatever analysis you need on the lines of all included code files:
+    
+    if (text.indexOf('// TODO:') !== -1) {
+        // ...
+    }
+
+accumulate any errors that you find:
+
+    errors.push({
+        line: line,
+        message: 'Found work to do: ' + text
+    });
+
+and return an object with your errors array:
+
+    return {
+        errors: errors
+    };
+
+Finally you have to configure Code-Copter to use your custom analyzer:
+
+    codeCopter.configure({
+        analyzers: {
+            disallowTodo: noTodo
+        }
+    });
 
 **Relevant examples**:
 

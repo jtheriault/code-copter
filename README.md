@@ -153,7 +153,7 @@ Finally you have to configure Code-Copter to use your custom analyzer:
 
 Similar to a custom analyzer, defining a custom reporter is as simple as writing a single function.
 
-An reporter function takes a [Report](https://github.com/jtheriault/code-copter-sdk#report) object which 
+A reporter function takes a [Report](https://github.com/jtheriault/code-copter-sdk#report) object which 
 has two important properties:
 
 * *pass* - a boolean for whether the entire codebase passed or not
@@ -204,6 +204,14 @@ but it is not required.
 * [analyzer-plugin](examples/analyzer-plugin/README.md) - Analyzer plugin and a demonstration project
 
 ### Writing a reporter plugin
+
+A reporter plugin is a node module which exports a [Reporter](https://github.com/jtheriault/code-copter-sdk#Reporter)-conformant object which currently only has one
+property:
+
+* *report* - a report function as described in the custom reporter example above
+
+It's preferred that the name of your plugin be prefixed with code-copter-reporter to make it easy to identify, 
+but it is not required.
 
 **Relevant examples**:
 

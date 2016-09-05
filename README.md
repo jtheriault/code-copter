@@ -57,11 +57,44 @@ well as a toggling boolean can be passed.  See the section on
 
 ### Integrating an analyzer plugin
 
+To integrate an analyzer plugin with Code-Copter, install it as a dependency of your project:
+
+    npm install --save-dev code-copter-analyzer-example
+
+and then name, excluding the prefeix, when configuring Code-Copter:
+
+    codeCopter.configure({
+        analyzers: {
+            example: true
+        }
+    });
+
+In this example, the default analyzers will still be enabled.
+
 **Relevant examples**:
 
 * [analyzer-plugin demo](examples/analyzer-plugin/spec/quality.spec.js) - Spec in a demo project configuring code-copter to use a custom analyzer plugin
 
 ### Integrating a reporter plugin
+
+To integrate a reporter plugin with Code-Copter, install it as a dependency of your project:
+
+    npm install --save-dev code-copter-reporter-example
+
+and then name, excluding the prefeix, when configuring Code-Copter:
+
+    codeCopter.configure({
+        reporter: 'example'
+    });
+
+How Code-Copter is run then depends on the reporter. For example, the default Jasmine reporter
+expects Jasmine to manage executing the tests, so Code-Copter is passed as a callback to a 
+Jasmine describe function. 
+
+However a reporter may be invoked by Code-Copter directly. In this case, you would simply call
+Code-Copter as a function:
+
+    codeCopter();
 
 **Relevant examples**:
 

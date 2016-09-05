@@ -222,6 +222,37 @@ but it is not required.
 Code-Copter accepts configuration choosing analyzers, choosing a reporter and
 excluding files and folders from analysis.
 
+By default, the entire configuration object equals:
+
+    {
+        analyzers: {
+            jscs: true,
+            jshint: true
+        },
+        reporter: 'jasmine',
+        source: {
+            exclude: ['coverage', 'node_modules'],
+            type: 'fs'
+        }
+    }
+
+### analyzers
+
+As seen in the examples above, analyzers are specified as an object property on the parameter passed to Code-Copter's configure method. The name is always the analyzer to configure, but the value is specific to the particular analyzer (except [custom analyzers](#defining_a_custom_analyzer)). Although, by convention, a boolean is used to enable or disable any packaged or plugin analyzer.
+
+In the case of the two included analyzers, [JSCS](https://github.com/jtheriault/code-copter-analyzer-jscs) and [JSHint](https://github.com/jtheriault/code-copter-analyzer-jshint), the contents of their respective configuration files (i.e. .jscsrc and .jshintrc) can also be passed as objects their configurations instead of having those files in your project.
+
+### reporter
+
+As seen in the examples above, the reporter is specified as a string property on the parameter passed to Code-Copter's configure method. The value is the name of the reporter to use.
+
+### source
+
+The source of code to analyze can also be configured via an object property on the parameter passed to Code-Copter's configure method. This object has two properties:
+
+* *type* - this is currently always 'fs'
+* *exclude* - an array of file or folder names to exclude from analysis. By default, this includes 'node_modules' and 'coverage'
+
 ## Contributing
 
 This is the core project, and the aim is to keep as much analyzing, reporting 

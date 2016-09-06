@@ -1,6 +1,6 @@
 {
   "name": "code-copter",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "Integrate JavaScript static code analysis into test framework",
   "scripts": {
     "clean": "rm -rf coverage/ node_modules npm-shrinkwrap.json",

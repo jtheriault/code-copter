@@ -11,6 +11,6 @@
   "devDependencies": {
     "code-copter": "file:../..",
     "code-copter-analyzer-hell-no-world": "file:code-copter-analyzer-hell-no-world",
-    "jasmine": "^2.4.1"
+    "jasmine": "2.4.1"
   }
 }

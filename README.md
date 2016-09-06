@@ -219,10 +219,9 @@ but it is not required.
 
 ## Configuration
 
-Code-Copter accepts configuration choosing analyzers, choosing a reporter and
-excluding files and folders from analysis.
+You can configure how Code-Copter handles its analysis and reporting through its *configure* method. It takes an object parameter which can override the default behavior.
 
-By default, the entire configuration object equals:
+By default, the configuration object equals:
 
     {
         analyzers: {
@@ -238,20 +237,22 @@ By default, the entire configuration object equals:
 
 ### analyzers
 
-As seen in the examples above, analyzers are specified as an object property on the parameter passed to Code-Copter's configure method. The name is always the analyzer to configure, but the value is specific to the particular analyzer (except [custom analyzers](#defining_a_custom_analyzer)). Although, by convention, a boolean is used to enable or disable any packaged or plugin analyzer.
+As seen in the examples above, analyzers are specified as an object property. The object keys are each analyzer to configure, but the values are specific to each analyzer.
 
-In the case of the two included analyzers, [JSCS](https://github.com/jtheriault/code-copter-analyzer-jscs) and [JSHint](https://github.com/jtheriault/code-copter-analyzer-jshint), the contents of their respective configuration files (i.e. .jscsrc and .jshintrc) can also be passed as objects their configurations instead of having those files in your project.
+In the case of the two included analyzers, [JSCS](https://github.com/jtheriault/code-copter-analyzer-jscs) and [JSHint](https://github.com/jtheriault/code-copter-analyzer-jshint), the contents of their respective configuration files (i.e. .jscsrc and .jshintrc) can be passed as objects instead of actually including those files in your project.
+
+Despite each analyzer being unique, by convention a boolean true can be used to enable an included or plugin analyzer with its default configuration or false can be used to disable it entirely.
 
 ### reporter
 
-As seen in the examples above, the reporter is specified as a string property on the parameter passed to Code-Copter's configure method. The value is the name of the reporter to use.
+As seen in the examples above, the reporter is specified as a string property whose value is the name of the reporter to use.
 
 ### source
 
-The source of code to analyze can also be configured via an object property on the parameter passed to Code-Copter's configure method. This object has two properties:
+This object property configures the source of the code to be analyzed and has two properties:
 
-* *type* - this is currently always 'fs'
 * *exclude* - an array of file or folder names to exclude from analysis. By default, this includes 'node_modules' and 'coverage'
+* *type* - this is currently always 'fs'
 
 ## Contributing
 
